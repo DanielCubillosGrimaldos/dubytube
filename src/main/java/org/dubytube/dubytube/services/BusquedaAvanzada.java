@@ -1,13 +1,10 @@
 package org.dubytube.dubytube.services;
-
 import org.dubytube.dubytube.domain.Cancion;
 import org.dubytube.dubytube.repo.CancionRepo;
-
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 public class BusquedaAvanzada {
 
     public enum Logica { AND, OR }

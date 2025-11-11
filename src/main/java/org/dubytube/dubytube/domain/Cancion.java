@@ -1,7 +1,5 @@
 package org.dubytube.dubytube.domain;
-
 import java.util.Objects;
-
 public class Cancion {
     private final String id;
     private String titulo;

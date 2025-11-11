@@ -1,20 +1,14 @@
 package org.dubytube.dubytube.ds;
-
 import org.dubytube.dubytube.domain.Cancion;
-
 import java.text.Normalizer;
 import java.util.*;
-
 public class PruebaTitulo {
-
     private static class Nodo {
         Map<Character, Nodo> hijos = new HashMap<>();
         boolean fin;
         List<Cancion> payload = new ArrayList<>(); // canciones con ese título
     }
-
     private final Nodo raiz = new Nodo();
-
     // normaliza: quita acentos, baja a minúsculas y limpia símbolos
     private static String norm(String s) {
         if (s == null) return "";
@@ -26,7 +20,6 @@ public class PruebaTitulo {
                 .trim();
         return t;
     }
-
     public void insert(Cancion c) {
         String key = norm(c.getTitulo());
         if (key.isEmpty()) return;
@@ -37,7 +30,6 @@ public class PruebaTitulo {
         n.fin = true;
         if (!n.payload.contains(c)) n.payload.add(c);
     }
-
     /** Sugerencias por prefijo (hasta k resultados). */
     public List<Cancion> suggest(String prefix, int k) {
         String p = norm(prefix);
