@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.dubytube.dubytube.HelloApplication;
+import org.dubytube.dubytube.domain.Role;
 import org.dubytube.dubytube.domain.Usuario;
 import org.dubytube.dubytube.repo.UsuarioRepo;
 import org.dubytube.dubytube.services.AuthService;
@@ -29,6 +30,11 @@ public class LoginController {
 
         // Que el botón "Login" se dispare con ENTER
         if (btnLogin != null) btnLogin.setDefaultButton(true);
+
+        var a = new Usuario("admin","123","Administrador");
+        a.setRole(Role.ADMIN);
+        repo.save(a);
+
     }
 
     @FXML

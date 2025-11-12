@@ -33,4 +33,9 @@ public class Usuario {
     public String getPassword(){ return password; }
     public void setPassword(String p){ this.password = p; } // opcional si la cambias
 
+    private Role role = Role.USER;
+    public Role getRole(){ return role; }
+    public void setRole(Role r){ this.role = r; }
+
+
 }
