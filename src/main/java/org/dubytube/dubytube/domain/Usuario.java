@@ -29,4 +29,8 @@ public class Usuario {
         return username.equals(((Usuario) o).username);
     }
     @Override public int hashCode() { return username.hashCode(); }
+
+    public String getPassword(){ return password; }
+    public void setPassword(String p){ this.password = p; } // opcional si la cambias
+
 }
