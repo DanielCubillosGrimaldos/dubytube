@@ -46,12 +46,49 @@ public class AvanzadaController {
         cAnio.setPrefWidth(80);
 
         tblAvanzada.getColumns().setAll(cTitulo, cArtista, cGenero, cAnio);
+        addFavoritosButtonColumn();
 
         // Datos de prueba (quítalos si ya cargas un catálogo real)
         repo.save(new Cancion("1","Love Song","Adele","Pop",2015,210));
         repo.save(new Cancion("2","Lobo Hombre","La Unión","Rock",1984,190));
         repo.save(new Cancion("3","Ave María","Schubert","Clásica",1825,150));
     }
+
+
+    private void addFavoritosButtonColumn() {
+        TableColumn<Cancion, Void> colAcciones = new TableColumn<>("Acción");
+        colAcciones.setPrefWidth(120);
+
+        colAcciones.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Añadir ♥");
+            {
+                btn.setOnAction(e -> {
+                    Cancion c = getTableView().getItems().get(getIndex());
+                    var u = org.dubytube.dubytube.services.Session.get();
+                    if (u != null && c != null) {
+                        boolean ok = u.addFavorito(c);
+                        if (ok) { btn.setText("Añadida"); btn.setDisable(true); }
+                    }
+                });
+            }
+            @Override protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    var u = org.dubytube.dubytube.services.Session.get();
+                    Cancion c = getTableView().getItems().get(getIndex());
+                    boolean ya = (u != null && c != null && u.hasFavorito(c.getId()));
+                    btn.setText(ya ? "Añadida" : "Añadir ♥");
+                    btn.setDisable(ya);
+                    setGraphic(btn);
+                }
+            }
+        });
+
+        tblAvanzada.getColumns().add(colAcciones);
+    }
+
 
     @FXML
     private void onBuscarAvanzado() {

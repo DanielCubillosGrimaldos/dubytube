@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dubytube.dubytube.viewController.BuscarController">
    <children>
       <VBox prefHeight="400.0" prefWidth="146.0" spacing="8.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -25,6 +24,7 @@
                   </Label>
                   <TextField fx:id="txtPrefijo" />
                   <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#onBuscar" text="Buscar" />
+                  <Button mnemonicParsing="false" onAction="#onVolver" text="Volver" />
                </children>
             </HBox>
             <TableView fx:id="tblResultados" prefHeight="200.0" prefWidth="200.0">
