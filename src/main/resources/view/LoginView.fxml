@@ -34,5 +34,9 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Button fx:id="btnRegister" layoutX="260.0" layoutY="320.0"
+              text="Registrar" onAction="#onRegister">
+         <font><Font size="16.0"/></font>
+      </Button>
    </children>
 </AnchorPane>
