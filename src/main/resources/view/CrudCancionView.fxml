@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.dubytube.dubytube.viewController.CrudCancionController">
+
+    <top>
+        <VBox spacing="8" BorderPane.alignment="CENTER">
+            <padding><Insets top="12" left="12" right="12" bottom="12"/></padding>
+            <Label text="CRUD Canciones"/>
+        </VBox>
+    </top>
+
+    <center>
+        <!-- OJO: NO definir cellValueFactory en FXML; el controller lo hace -->
+        <TableView fx:id="tbl" prefHeight="360">
+            <columns>
+                <TableColumn fx:id="colId"       text="ID"        prefWidth="160"/>
+                <TableColumn fx:id="colTitulo"   text="Título"    prefWidth="220"/>
+                <TableColumn fx:id="colArtista"  text="Artista"   prefWidth="180"/>
+                <TableColumn fx:id="colGenero"   text="Género"    prefWidth="140"/>
+                <TableColumn fx:id="colAnio"     text="Año"       prefWidth="80"/>
+                <TableColumn fx:id="colDuracion" text="Duración"  prefWidth="100"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <VBox spacing="10" BorderPane.alignment="CENTER">
+            <padding><Insets top="10" left="12" right="12" bottom="12"/></padding>
+
+            <GridPane hgap="10" vgap="8">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="15"/>
+                    <ColumnConstraints percentWidth="35"/>
+                    <ColumnConstraints percentWidth="15"/>
+                    <ColumnConstraints percentWidth="35"/>
+                </columnConstraints>
+
+                <Label text="ID"           GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtId"   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Título"           GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTitulo"   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Artista"          GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtArtista"  GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                <Label text="Género"           GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtGenero"   GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                <Label text="Año"              GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtAnio"     GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Duración (s)"         GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtDuracion"     GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+            </GridPane>
+
+            <HBox spacing="10">
+                <Button text="Nuevo"   onAction="#onNuevo"/>
+                <Button text="Guardar" onAction="#onGuardar"/>
+                <Button text="Eliminar" onAction="#onEliminar"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Button text="Volver"  onAction="#onVolver"/>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

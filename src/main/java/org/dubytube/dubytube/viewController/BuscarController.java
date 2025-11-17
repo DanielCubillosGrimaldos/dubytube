@@ -15,6 +15,8 @@ import org.dubytube.dubytube.services.Session;
 
 import java.util.*;
 
+import static org.dubytube.dubytube.AppContext.canciones;
+
 public class BuscarController {
 
     @FXML private TextField txtPrefijo;
@@ -26,7 +28,7 @@ public class BuscarController {
     @FXML private TableColumn<Cancion, String>  colGenero;
     @FXML private TableColumn<Cancion, Integer> colAnio;
 
-    private final CancionRepo repo   = new CancionRepo();
+    private final CancionRepo repo = canciones();
     private final CancionIndice indice = new CancionIndice(repo);
 
     @FXML
@@ -38,10 +40,6 @@ public class BuscarController {
         colAnio.setCellValueFactory(new PropertyValueFactory<>("anio"));
 
         // Datos de prueba (luego reemplazar por carga real)
-        repo.save(new Cancion("1","Love Song","Adele","Pop",2015,210));
-        repo.save(new Cancion("2","Lobo Hombre","La Unión","Rock",1984,190));
-        repo.save(new Cancion("3","Ave Maria","Schubert","Clásica",1825,150));
-
         indice.indexarExistentes();
 
         // Columna de acción para favoritos

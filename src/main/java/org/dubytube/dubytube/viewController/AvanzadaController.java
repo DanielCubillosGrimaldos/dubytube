@@ -10,6 +10,8 @@ import org.dubytube.dubytube.services.BusquedaAvanzada;
 
 import java.util.List;
 
+import static org.dubytube.dubytube.AppContext.canciones;
+
 public class AvanzadaController {
 
     // Filtros
@@ -17,7 +19,7 @@ public class AvanzadaController {
     @FXML private RadioButton rbAND, rbOR;
     @FXML private TableView<Cancion> tblAvanzada;
 
-    private final CancionRepo repo = new CancionRepo();
+    private final CancionRepo repo = canciones();
     private final BusquedaAvanzada svc = new BusquedaAvanzada(repo);
 
     @FXML

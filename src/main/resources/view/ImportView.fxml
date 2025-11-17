@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.dubytube.dubytube.viewController.ImportController"
+      spacing="12" styleClass="root">
+    <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+
+    <Label text="Importar catálogo (CSV) — Formato: id,titulo,artista,genero,anio,duracionSeg"/>
+    <HBox spacing="8">
+        <Button text="Elegir archivo..." onAction="#onPickFile"/>
+        <Label fx:id="lblFile" text="(sin archivo)"/>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Volver" onAction="#onVolver"/>
+    </HBox>
+
+    <TextArea fx:id="txtLog" prefRowCount="18" promptText="Log de importación..." />
+</VBox>

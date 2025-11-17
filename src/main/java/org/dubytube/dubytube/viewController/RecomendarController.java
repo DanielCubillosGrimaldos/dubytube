@@ -14,6 +14,8 @@ import org.dubytube.dubytube.services.RecomendacionService;
 
 import java.util.List;
 
+import static org.dubytube.dubytube.AppContext.canciones;
+
 public class RecomendarController {
 
     @FXML private ComboBox<Cancion> cmbSemilla;
@@ -26,7 +28,7 @@ public class RecomendarController {
     @FXML private TableColumn<RecomendacionService.Rec, Integer> colAnio;
     @FXML private TableColumn<RecomendacionService.Rec, String>  colDist;
 
-    private final CancionRepo repo = new CancionRepo();
+    private final CancionRepo repo = canciones();
     private RecomendacionService svc;
 
     @FXML
