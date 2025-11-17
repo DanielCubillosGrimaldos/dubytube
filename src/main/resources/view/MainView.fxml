@@ -7,60 +7,84 @@
 <?import javafx.scene.text.*?>
 
 <VBox
-      fx:controller="org.dubytube.dubytube.viewController.MainController"
-        alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
-   <padding>
-      <Insets top="12.0" />
-   </padding>
-   <children>
-      <Label fx:id="lblUsuario" text="Bienvenido a .......">
-         <font>
-            <Font size="25.0" />
-         </font></Label>
-      <AnchorPane prefHeight="215.0" prefWidth="900.0">
-         <children>
-            <Button layoutX="541.0" layoutY="160.0" mnemonicParsing="false" onAction="#goBuscar" text="Buscar">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="378.0" layoutY="160.0" mnemonicParsing="false" onAction="#goAvanzada" text="Búsqueda Avanzada">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="88.0" layoutY="160.0" mnemonicParsing="false" onAction="#goRecom" text="Recomendar Canciones">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="38.0" layoutY="33.0" mnemonicParsing="false" onAction="#goPerfil" text="Perfil">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button fx:id="btnCrud" layoutX="641.0" layoutY="160.0" mnemonicParsing="false" onAction="#goCrud" text="CRUD Canciones">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="104.0" layoutY="33.0" mnemonicParsing="false" onAction="#onExport" text="Exportar Favoritos">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="256.0" layoutY="33.0" mnemonicParsing="false" onAction="#goAmigos" text="Amigos">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button fx:id="btnImport" layoutX="657.0" layoutY="122.0" mnemonicParsing="false" onAction="#goImport" text="Import CVS">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="785.0" layoutY="160.0" mnemonicParsing="false" onAction="#onLogout" text="Cerrar Sesión">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Line endX="19.0" endY="190.0" layoutX="757.0" layoutY="15.0" startX="19.0" startY="-15.0" />
-            <Line endX="19.0" endY="190.0" layoutX="601.0" layoutY="15.0" startX="19.0" startY="-15.0" />
-            <Line endX="3.0" endY="190.0" layoutX="345.0" layoutY="15.0" startX="3.0" startY="-15.0" />
-            <Line endX="760.0" layoutX="115.0" layoutY="205.0" startX="-100.0" />
-            <Line endX="100.0" layoutX="247.0" layoutY="108.0" startX="-234.0" startY="-7.62939453125E-6" />
-         </children>
-      </AnchorPane>
-   </children>
+        fx:controller="org.dubytube.dubytube.viewController.MainController"
+        alignment="TOP_CENTER"
+        prefHeight="600.0" prefWidth="900.0"
+        spacing="10.0"
+        xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+    <padding>
+        <Insets top="12.0"/>
+    </padding>
+
+    <children>
+
+        <!-- Etiqueta que el MainController actualizará con el nombre/rol -->
+        <Label fx:id="lblUsuario" text="Bienvenido a .......">
+            <font><Font size="25.0"/></font>
+        </Label>
+
+        <AnchorPane prefHeight="215.0" prefWidth="900.0">
+            <children>
+
+                <!-- Usuario -->
+                <Button layoutX="541.0" layoutY="160.0" mnemonicParsing="false"
+                        onAction="#goBuscar" text="Buscar">
+                    <font><Font size="14.0"/></font>
+                </Button>
+
+                <Button layoutX="378.0" layoutY="160.0" mnemonicParsing="false"
+                        onAction="#goAvanzada" text="Búsqueda Avanzada">
+                    <font><Font size="14.0"/></font>
+                </Button>
+
+                <Button layoutX="88.0" layoutY="160.0" mnemonicParsing="false"
+                        onAction="#goRecom" text="Recomendar Canciones">
+                    <font><Font size="14.0"/></font>
+                </Button>
+
+                <Button layoutX="38.0" layoutY="33.0" mnemonicParsing="false"
+                        onAction="#goPerfil" text="Perfil">
+                    <font><Font size="14.0"/></font>
+                </Button>
+
+                <Button layoutX="104.0" layoutY="33.0" mnemonicParsing="false"
+                        onAction="#onExport" text="Exportar Favoritos">
+                    <font><Font size="14.0"/></font>
+                </Button>
+
+                <Button layoutX="256.0" layoutY="33.0" mnemonicParsing="false"
+                        onAction="#goAmigos" text="Amigos">
+                    <font><Font size="14.0"/></font>
+                </Button>
+
+                <!-- Admin (el MainController oculta/mostrar según rol) -->
+                <Button fx:id="btnImport" layoutX="657.0" layoutY="122.0"
+                        mnemonicParsing="false" onAction="#goImport"
+                        text="Import CSV (Admin)">
+                    <font><Font size="14.0"/></font>
+                </Button>
+
+                <Button fx:id="btnCrud" layoutX="641.0" layoutY="160.0"
+                        mnemonicParsing="false" onAction="#goCrud"
+                        text="CRUD Canciones (Admin)">
+                    <font><Font size="14.0"/></font>
+                </Button>
+
+                <!-- Sesión -->
+                <Button layoutX="785.0" layoutY="160.0" mnemonicParsing="false"
+                        onAction="#onLogout" text="Cerrar Sesión">
+                    <font><Font size="14.0"/></font>
+                </Button>
+
+                <!-- Líneas decorativas -->
+                <Line endX="19.0" endY="190.0" layoutX="757.0" layoutY="15.0" startX="19.0" startY="-15.0"/>
+                <Line endX="19.0" endY="190.0" layoutX="601.0" layoutY="15.0" startX="19.0" startY="-15.0"/>
+                <Line endX="3.0" endY="190.0" layoutX="345.0" layoutY="15.0" startX="3.0" startY="-15.0"/>
+                <Line endX="760.0" layoutX="115.0" layoutY="205.0" startX="-100.0"/>
+                <Line endX="100.0" layoutX="247.0" layoutY="108.0" startX="-234.0" startY="-7.62939453125E-6"/>
+
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>
