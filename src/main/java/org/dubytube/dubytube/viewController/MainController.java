@@ -2,6 +2,7 @@ package org.dubytube.dubytube.viewController;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -86,19 +87,31 @@ public class MainController {
     private void go(String fxml, String title){
         try{
             var stage = (Stage) lblUsuario.getScene().getWindow();
+
             var url = HelloApplication.class.getResource(fxml);
             if (url == null) {
                 alertError("No se encontró la vista: " + fxml);
                 return;
             }
-            var scene = new Scene(new FXMLLoader(url).load(), 900, 600);
+
+            var root = new FXMLLoader(url).load();
+            var scene = new Scene((Parent) root, 900, 600);
+            scene.getStylesheets().add(
+                    HelloApplication.class.getResource("/styles/app.css").toExternalForm()
+            );
+
             stage.setTitle(title);
             stage.setScene(scene);
+            stage.show(); // por si vienes desde otra ventana/escena
         }catch(Exception e){
             e.printStackTrace();
-            alertError("No se pudo cargar la vista.");
+            alertError("No se pudo cargar " + fxml + ":\n" + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
+
+
+
+
 
     private void alertInfo(String msg){
         new Alert(Alert.AlertType.INFORMATION, msg).showAndWait();
@@ -106,4 +119,6 @@ public class MainController {
     private void alertError(String msg){
         new Alert(Alert.AlertType.ERROR, msg).showAndWait();
     }
+
+
 }

@@ -7,6 +7,12 @@ public class GrafoSocial {
         agregarUsuario(a); agregarUsuario(b);
         adj.get(a).add(b); adj.get(b).add(a);
     }
+
+    // en org.dubytube.dubytube.ds.GrafoSocial
+    public Set<String> amigosDe(String user) {
+        return new java.util.HashSet<>(adj.getOrDefault(user, java.util.Collections.emptySet()));
+    }
+
     /** Sugerencias: amigos de amigos a distancia EXACTA 2 (no amigos directos). */
     public Set<String> sugerenciasAmigos(String user) {
         if (!adj.containsKey(user)) return Collections.emptySet();
