@@ -2,6 +2,7 @@ package org.dubytube.dubytube.viewController;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -16,25 +17,22 @@ public class LoginController {
 
     @FXML private TextField txtUser;
     @FXML private PasswordField txtPass;
-    @FXML private Button btnLogin;           // opcional (por si quieres deshabilitarlo)
-    @FXML private Label lblError;            // opcional: agrega un Label en la vista y dale este fx:id
+    @FXML private Button btnLogin;
+    @FXML private Label lblError;
 
     private final UsuarioRepo repo = new UsuarioRepo();
     private final AuthService auth = new AuthService(repo);
 
     @FXML
     public void initialize() {
-        // Usuarios de demo para probar:
-        repo.save(new Usuario("admin", "123", "Administrador")); // si manejas Role, marca admin en otra parte
-        repo.save(new Usuario("daniel", "123", "Daniel"));
+        // Usuarios demo
+        var admin = new Usuario("admin", "123", "Administrador");
+        admin.setRole(Role.ADMIN);
+        repo.save(admin);
 
-        // Que el botón "Login" se dispare con ENTER
+        repo.save(new Usuario("daniel", "123", "Daniel")); // USER por defecto
+
         if (btnLogin != null) btnLogin.setDefaultButton(true);
-
-        var a = new Usuario("admin","123","Administrador");
-        a.setRole(Role.ADMIN);
-        repo.save(a);
-
     }
 
     @FXML
@@ -63,11 +61,19 @@ public class LoginController {
 
     private void go(String fxml, String title) {
         try {
-            var loader = new FXMLLoader(HelloApplication.class.getResource(fxml));
-            var scene  = new Scene(loader.load(), 900, 600);
-            Stage stage = (Stage) txtUser.getScene().getWindow(); // toma la ventana actual
+            var url   = HelloApplication.class.getResource(fxml);
+            var root  = new FXMLLoader(url).load();
+            var scene = new Scene((Parent) root, 900, 600);
+
+            // APLICAR CSS A LA ESCENA PRINCIPAL
+            scene.getStylesheets().add(
+                    HelloApplication.class.getResource("/styles/app.css").toExternalForm()
+            );
+
+            Stage stage = (Stage) txtUser.getScene().getWindow();
             stage.setTitle(title);
             stage.setScene(scene);
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
             showError("No se pudo cargar la vista destino.");

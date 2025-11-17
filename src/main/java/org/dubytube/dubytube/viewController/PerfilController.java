@@ -1,0 +1,87 @@
+package org.dubytube.dubytube.viewController;
+
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import org.dubytube.dubytube.HelloApplication;
+import org.dubytube.dubytube.domain.Cancion;
+import org.dubytube.dubytube.services.ExportarServices;
+import org.dubytube.dubytube.services.Session;
+
+import java.nio.file.Path;
+
+public class PerfilController {
+
+    @FXML private TableView<Cancion> tblFav;
+    @FXML private TableColumn<Cancion, String>  colTitulo;
+    @FXML private TableColumn<Cancion, String>  colArtista;
+    @FXML private TableColumn<Cancion, String>  colGenero;
+    @FXML private TableColumn<Cancion, Integer> colAnio;
+    @FXML private TableColumn<Cancion, Void>    colAccion;
+
+    @FXML
+    public void initialize() {
+        colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        colArtista.setCellValueFactory(new PropertyValueFactory<>("artista"));
+        colGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
+        colAnio.setCellValueFactory(new PropertyValueFactory<>("anio"));
+
+        var u = Session.get();
+        if (u != null) {
+            tblFav.setItems(FXCollections.observableArrayList(u.getFavoritos()));
+        }
+
+        addRemoveButtonColumn();
+    }
+
+    private void addRemoveButtonColumn() {
+        colAccion.setCellFactory(tv -> new TableCell<>() {
+            private final Button btn = new Button("Quitar");
+
+            {
+                btn.setOnAction(e -> {
+                    Cancion c = getTableView().getItems().get(getIndex());
+                    var u = Session.get();
+                    if (u != null && c != null && u.removeFavoritoById(c.getId())) {
+                        getTableView().getItems().remove(c);
+                        getTableView().refresh();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btn);
+            }
+        });
+    }
+
+    @FXML
+    private void onExport() {
+        try {
+            var u = Session.get();
+            if (u == null) return;
+            ExportarServices.exportFavoritos(u, Path.of("favoritos.csv"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onVolver() {
+        try {
+            Stage stage = (Stage) tblFav.getScene().getWindow();
+            var url = HelloApplication.class.getResource("/view/MainView.fxml");
+            var scene = new Scene(new FXMLLoader(url).load(), 900, 600);
+            stage.setTitle("Inicio");
+            stage.setScene(scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.dubytube.dubytube.viewController.AmigosController"
+      spacing="10">
+
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label text="Usuario:"/>
+        <TextField fx:id="txtUser" prefWidth="200"/>
+        <Button text="Ver" onAction="#onCargar"/>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Volver" onAction="#onVolver"/>
+    </HBox>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label text="Agregar amistad con:"/>
+        <TextField fx:id="txtAmigo" promptText="username del amigo" prefWidth="220"/>
+        <Button text="Agregar" onAction="#onAgregar"/>
+        <Label fx:id="lblMsg"/>
+    </HBox>
+
+    <HBox spacing="16">
+        <VBox spacing="6" VBox.vgrow="ALWAYS">
+            <Label text="Amigos directos"/>
+            <ListView fx:id="lstDirectos" prefHeight="420"/>
+        </VBox>
+        <VBox spacing="6" VBox.vgrow="ALWAYS">
+            <Label text="Sugerencias (distancia 2)"/>
+            <ListView fx:id="lstSugerencias" prefHeight="420"/>
+        </VBox>
+    </HBox>
+</VBox>

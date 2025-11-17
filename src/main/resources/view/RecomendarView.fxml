@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.dubytube.dubytube.viewController.RecomendarController"
+      spacing="10">
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+    <HBox spacing="8">
+        <Label text="Canción semilla:"/>
+        <ComboBox fx:id="cmbSemilla" prefWidth="360"/>
+        <Label text="k:"/>
+        <Spinner fx:id="spK" prefWidth="80"/>
+        <Button text="Recomendar" onAction="#onRecomendar"/>
+        <Button text="Volver" onAction="#onVolver"/>
+    </HBox>
+
+    <TableView fx:id="tblResultados" prefHeight="520">
+        <columns>
+            <TableColumn fx:id="colTitulo"   text="Título"   prefWidth="260"/>
+            <TableColumn fx:id="colArtista"  text="Artista"  prefWidth="220"/>
+            <TableColumn fx:id="colGenero"   text="Género"   prefWidth="140"/>
+            <TableColumn fx:id="colAnio"     text="Año"      prefWidth="80"/>
+            <TableColumn fx:id="colDist"     text="Distancia" prefWidth="120"/>
+        </columns>
+    </TableView>
+</VBox>

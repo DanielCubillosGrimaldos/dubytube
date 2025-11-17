@@ -1,0 +1,23 @@
+/* src/main/resources/styles/app.css */
+.root {
+    -fx-base: #121212;
+    -fx-accent: #00D084;
+    -fx-control-inner-background: #1E1E1E;
+    -fx-background: #121212;
+    -fx-text-fill: #FFFFFF;
+}
+
+.label { -fx-text-fill: #FFFFFF; }
+
+.button {
+    -fx-font-weight: 600;
+    -fx-background-radius: 8;
+    -fx-padding: 8 14;
+}
+
+.table-view { -fx-background-color: transparent; }
+
+.table-row-cell:filled:selected, .table-cell:filled:selected {
+    -fx-background-color: -fx-accent;
+    -fx-text-fill: #000000;
+}

@@ -6,7 +6,9 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="TOP_CENTER" minHeight="320.0" minWidth="600.0" prefHeight="320.0" prefWidth="930.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dubytube.dubytube.viewController.MainController">
+<VBox
+      fx:controller="org.dubytube.dubytube.viewController.MainController"
+        alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <padding>
       <Insets top="12.0" />
    </padding>
@@ -15,7 +17,7 @@
          <font>
             <Font size="25.0" />
          </font></Label>
-      <AnchorPane prefHeight="262.0" prefWidth="928.0">
+      <AnchorPane prefHeight="215.0" prefWidth="900.0">
          <children>
             <Button layoutX="541.0" layoutY="160.0" mnemonicParsing="false" onAction="#goBuscar" text="Buscar">
                <font>
@@ -56,7 +58,7 @@
             <Line endX="19.0" endY="190.0" layoutX="757.0" layoutY="15.0" startX="19.0" startY="-15.0" />
             <Line endX="19.0" endY="190.0" layoutX="601.0" layoutY="15.0" startX="19.0" startY="-15.0" />
             <Line endX="3.0" endY="190.0" layoutX="345.0" layoutY="15.0" startX="3.0" startY="-15.0" />
-            <Line endX="789.7999267578125" endY="3.0517578125E-5" layoutX="115.0" layoutY="205.0" startX="-100.0" />
+            <Line endX="760.0" layoutX="115.0" layoutY="205.0" startX="-100.0" />
             <Line endX="100.0" layoutX="247.0" layoutY="108.0" startX="-234.0" startY="-7.62939453125E-6" />
          </children>
       </AnchorPane>
