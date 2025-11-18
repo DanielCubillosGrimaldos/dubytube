@@ -70,7 +70,52 @@ public class LoginController {
     }
 
     // Si usas registro, puedes dejar tu implementación actual
-    @FXML private void onRegister() { /* tu código de registro o deja en blanco */ }
+    @FXML private void onRegister() {  if (processing) return;
+        processing = true;
+
+        try {
+            String u = safe(txtUser.getText());
+            String p = safe(txtPass.getText());
+
+            // Validaciones básicas
+            if (u.isEmpty() || p.isEmpty()) {
+                err("Completa usuario y contraseña para registrarte.");
+                return;
+            }
+
+            if (usuarios.exists(u)) {
+                err("Ese usuario ya existe.");
+                return;
+            }
+
+            // Crear nuevo usuario (uso el username como nombre para simplificar)
+            Usuario nuevo = new Usuario(u, p, u);
+            nuevo.setRole(Role.USER);
+
+            boolean ok = usuarios.register(nuevo);
+            if (!ok) {
+                err("No se pudo registrar el usuario.");
+                return;
+            }
+
+            // Opcional: iniciar sesión automáticamente
+            Session.set(nuevo);
+
+            // Ir al feed principal (igual que en onLogin)
+            var stage  = (Stage) txtUser.getScene().getWindow();
+            var loader = new FXMLLoader(HelloApplication.class.getResource("/view/MainView.fxml"));
+            var scene  = new Scene(loader.load(), 900, 600);
+            var css    = HelloApplication.class.getResource("/styles/app.css");
+            if (css != null) scene.getStylesheets().add(css.toExternalForm());
+            stage.setTitle("Dubytube");
+            stage.setScene(scene);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            err("Error registrando usuario.");
+        } finally {
+            processing = false;
+        } }
 
     private String safe(String s){ return s == null ? "" : s.trim(); }
     private void err(String m){

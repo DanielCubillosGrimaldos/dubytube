@@ -7,6 +7,13 @@
     "role": "USER"
   },
   {
+    "username": "Alejandro",
+    "password": "123",
+    "nombre": "Alejandro",
+    "favoritos": [],
+    "role": "USER"
+  },
+  {
     "username": "admin",
     "password": "123",
     "nombre": "Administrador",
