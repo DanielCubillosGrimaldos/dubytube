@@ -15,6 +15,7 @@ import org.dubytube.dubytube.services.CancionIndice;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class CrudCancionController {
 
@@ -26,9 +27,9 @@ public class CrudCancionController {
     // === Campos de formulario (mantengo tus fx:id) ===
     @FXML private TextField txtId, txtTitulo, txtArtista, txtGenero, txtAnio, txtDuracion;
 
-    // Usa el repositorio COMPARTIDO del contexto
-    private final CancionRepo repo = AppContext.canciones();
-    private final CancionIndice indice = new CancionIndice(repo);
+    // Repos/índice COMPARTIDOS (una sola fuente de verdad)
+    private final CancionRepo repo        = AppContext.canciones();
+    private final CancionIndice indice    = AppContext.indice();
 
     @FXML
     public void initialize() {
@@ -59,7 +60,8 @@ public class CrudCancionController {
 
     private void refrescarTabla() {
         tbl.setItems(FXCollections.observableArrayList(repo.findAll()));
-        indice.indexarExistentes();                        // <- para que Buscar/Avanzada vean los cambios
+        // Mantener el trie sincronizado para que Buscar/Avanzada vean los cambios
+        indice.indexarExistentes();
     }
 
     private void limpiarFormulario() {
@@ -108,6 +110,10 @@ public class CrudCancionController {
             }
             repo.save(nueva);
 
+            // Índice de títulos y grafo de similitud
+            AppContext.indice().registrarCancion(nueva);
+            conectarSimilitudesHeuristica(nueva);
+
             refrescarTabla();
             seleccionarEnTabla(id);
         } catch (NumberFormatException e) {
@@ -126,6 +132,7 @@ public class CrudCancionController {
         }
         if (confirm("¿Eliminar \"" + sel.getTitulo() + "\"?")) {
             repo.delete(sel.getId());
+            // (Opcional) TODO: remover aristas del grafo si implementas un método específico
             refrescarTabla();
             limpiarFormulario();
         }
@@ -135,7 +142,8 @@ public class CrudCancionController {
         try {
             Stage st = (Stage) tbl.getScene().getWindow();
             var scene = new Scene(new FXMLLoader(HelloApplication.class.getResource("/view/MainView.fxml")).load(), 900, 600);
-            scene.getStylesheets().add(HelloApplication.class.getResource("/styles/app.css").toExternalForm());
+            var css = HelloApplication.class.getResource("/styles/app.css");
+            if (css != null) scene.getStylesheets().add(css.toExternalForm());
             st.setTitle("Dubytube");
             st.setScene(scene);
         } catch (Exception e) {
@@ -152,11 +160,41 @@ public class CrudCancionController {
             tbl.scrollTo(c);
         });
     }
+
     private String safe(String s){ return s == null ? "" : s.trim(); }
 
     private boolean confirm(String msg) {
         var a = new Alert(Alert.AlertType.CONFIRMATION, msg, ButtonType.OK, ButtonType.CANCEL);
         return a.showAndWait().filter(b -> b == ButtonType.OK).isPresent();
     }
+
     private void alertError(String m) { new Alert(Alert.AlertType.ERROR, m).showAndWait(); }
+
+    /**
+     * Conecta la canción guardada con el resto aplicando una métrica simple:
+     * +5 si coincide artista, +3 si coincide género, +2 si año dif <= 2, +1 si dif <=5.
+     * Distancia = 10 - score (acotada a mínimo 0.5). Menor distancia = más similar.
+     */
+    private void conectarSimilitudesHeuristica(Cancion c) {
+        var grafo = AppContext.similitud();
+        var todas = AppContext.canciones().findAll().stream()
+                .filter(o -> !o.getId().equals(c.getId()))
+                .collect(Collectors.toList());
+
+        for (var o : todas) {
+            double score = 0;
+            if (c.getArtista()!=null && o.getArtista()!=null &&
+                    c.getArtista().equalsIgnoreCase(o.getArtista())) score += 5.0;
+
+            if (c.getGenero()!=null && o.getGenero()!=null &&
+                    c.getGenero().equalsIgnoreCase(o.getGenero()))   score += 3.0;
+
+            int diff = Math.abs(c.getAnio() - o.getAnio());
+            if (diff <= 2)      score += 2.0;
+            else if (diff <= 5) score += 1.0;
+
+            double distancia = Math.max(0.5, 10.0 - score);
+            grafo.agregarSimilitud(c.getId(), o.getId(), distancia); // no dirigido (u<->v) dentro del grafo
+        }
+    }
 }

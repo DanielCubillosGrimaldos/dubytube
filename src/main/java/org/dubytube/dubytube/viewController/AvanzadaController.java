@@ -2,113 +2,109 @@ package org.dubytube.dubytube.viewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import org.dubytube.dubytube.AppContext;
+import org.dubytube.dubytube.HelloApplication;
 import org.dubytube.dubytube.domain.Cancion;
 import org.dubytube.dubytube.repo.CancionRepo;
 import org.dubytube.dubytube.services.BusquedaAvanzada;
 
 import java.util.List;
 
-import static org.dubytube.dubytube.AppContext.canciones;
-
 public class AvanzadaController {
 
-    // Filtros
     @FXML private TextField txtArtista, txtGenero, txtAnioMin, txtAnioMax;
-    @FXML private RadioButton rbAND, rbOR;
-    @FXML private TableView<Cancion> tblAvanzada;
+    @FXML private ChoiceBox<BusquedaAvanzada.Logica> choiceLogica;
 
-    private final CancionRepo repo = canciones();
-    private final BusquedaAvanzada svc = new BusquedaAvanzada(repo);
+    @FXML private TableView<Cancion> tblResultados;
+    @FXML private TableColumn<Cancion, String>  colTitulo, colArtista, colGenero;
+    @FXML private TableColumn<Cancion, Integer> colAnio;
+
+    // Repo compartido + servicio concurrente
+    private final CancionRepo repo = AppContext.canciones();
+    private final BusquedaAvanzada servicio = new BusquedaAvanzada(repo);
 
     @FXML
     public void initialize() {
-        // ToggleGroup para AND/OR
-        ToggleGroup logica = new ToggleGroup();
-        rbAND.setToggleGroup(logica);
-        rbOR.setToggleGroup(logica);
-        rbOR.setSelected(true);
+        // Garantiza datos de demo + índice listos al abrir
+        AppContext.bootstrapIfEmpty();
 
-        // Columnas por código (no dependen de IDs en el FXML)
-        TableColumn<Cancion,String> cTitulo  = new TableColumn<>("Título");
-        cTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        cTitulo.setPrefWidth(240);
+        // Tabla
+        colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        colArtista.setCellValueFactory(new PropertyValueFactory<>("artista"));
+        colGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
+        colAnio.setCellValueFactory(new PropertyValueFactory<>("anio"));
 
-        TableColumn<Cancion,String> cArtista = new TableColumn<>("Artista");
-        cArtista.setCellValueFactory(new PropertyValueFactory<>("artista"));
-        cArtista.setPrefWidth(200);
+        // AND/OR
+        choiceLogica.getItems().setAll(BusquedaAvanzada.Logica.AND, BusquedaAvanzada.Logica.OR);
+        choiceLogica.setValue(BusquedaAvanzada.Logica.AND);
 
-        TableColumn<Cancion,String> cGenero  = new TableColumn<>("Género");
-        cGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
-        cGenero.setPrefWidth(140);
-
-        TableColumn<Cancion,Integer> cAnio   = new TableColumn<>("Año");
-        cAnio.setCellValueFactory(new PropertyValueFactory<>("anio"));
-        cAnio.setPrefWidth(80);
-
-        tblAvanzada.getColumns().setAll(cTitulo, cArtista, cGenero, cAnio);
-        addFavoritosButtonColumn();
-
-        // Datos de prueba (quítalos si ya cargas un catálogo real)
-        repo.save(new Cancion("1","Love Song","Adele","Pop",2015,210));
-        repo.save(new Cancion("2","Lobo Hombre","La Unión","Rock",1984,190));
-        repo.save(new Cancion("3","Ave María","Schubert","Clásica",1825,150));
+        // Mostrar todas al entrar
+        mostrarTodo();
     }
-
-
-    private void addFavoritosButtonColumn() {
-        TableColumn<Cancion, Void> colAcciones = new TableColumn<>("Acción");
-        colAcciones.setPrefWidth(120);
-
-        colAcciones.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Añadir ♥");
-            {
-                btn.setOnAction(e -> {
-                    Cancion c = getTableView().getItems().get(getIndex());
-                    var u = org.dubytube.dubytube.services.Session.get();
-                    if (u != null && c != null) {
-                        boolean ok = u.addFavorito(c);
-                        if (ok) { btn.setText("Añadida"); btn.setDisable(true); }
-                    }
-                });
-            }
-            @Override protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    var u = org.dubytube.dubytube.services.Session.get();
-                    Cancion c = getTableView().getItems().get(getIndex());
-                    boolean ya = (u != null && c != null && u.hasFavorito(c.getId()));
-                    btn.setText(ya ? "Añadida" : "Añadir ♥");
-                    btn.setDisable(ya);
-                    setGraphic(btn);
-                }
-            }
-        });
-
-        tblAvanzada.getColumns().add(colAcciones);
-    }
-
 
     @FXML
-    private void onBuscarAvanzado() {
-        Integer min = parseI(txtAnioMin.getText());
-        Integer max = parseI(txtAnioMax.getText());
-        var logica = rbAND.isSelected() ? BusquedaAvanzada.Logica.AND : BusquedaAvanzada.Logica.OR;
+    private void onBuscar() {
+        String artista = t(txtArtista);
+        String genero  = t(txtGenero);
+        Integer min    = parseIntOrNull(txtAnioMin.getText());
+        Integer max    = parseIntOrNull(txtAnioMax.getText());
+        var logica     = (choiceLogica.getValue() == null)
+                ? BusquedaAvanzada.Logica.AND
+                : choiceLogica.getValue();
 
-        List<Cancion> r = svc.buscar(
-                safe(txtArtista.getText()),
-                safe(txtGenero.getText()),
-                min, max, logica
-        );
-        tblAvanzada.setItems(FXCollections.observableArrayList(r));
+        // Si no hay filtros, muestra todo
+        if (artista.isEmpty() && genero.isEmpty() && min == null && max == null) {
+            mostrarTodo();
+            return;
+        }
+
+        List<Cancion> result = servicio.buscar(artista, genero, min, max, logica);
+        tblResultados.setItems(FXCollections.observableArrayList(result));
+        tblResultados.refresh();
     }
 
-    private String safe(String s){ return (s==null || s.isBlank()) ? null : s.trim(); }
-    private Integer parseI(String s){
-        try { return (s==null || s.isBlank()) ? null : Integer.parseInt(s.trim()); }
-        catch (Exception e){ return null; }
+    @FXML
+    private void onLimpiar() {
+        txtArtista.clear();
+        txtGenero.clear();
+        txtAnioMin.clear();
+        txtAnioMax.clear();
+        choiceLogica.setValue(BusquedaAvanzada.Logica.AND);
+        mostrarTodo();
+    }
+
+    private void mostrarTodo() {
+        tblResultados.setItems(FXCollections.observableArrayList(repo.findAll()));
+        tblResultados.refresh();
+    }
+
+    private Integer parseIntOrNull(String s) {
+        if (s == null || s.trim().isEmpty()) return null;
+        try { return Integer.parseInt(s.trim()); } catch (Exception e) { return null; }
+    }
+
+    private String t(TextField tf) {
+        return (tf == null || tf.getText() == null) ? "" : tf.getText().trim();
+    }
+
+    @FXML
+    private void onVolver() {
+        try {
+            Stage stage = (Stage) tblResultados.getScene().getWindow();
+            var url = HelloApplication.class.getResource("/view/MainView.fxml");
+            var scene = new Scene(new FXMLLoader(url).load(), 900, 600);
+            var css = HelloApplication.class.getResource("/styles/app.css");
+            if (css != null) scene.getStylesheets().add(css.toExternalForm());
+            stage.setTitle("Dubytube");
+            stage.setScene(scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "No se pudo volver al menú.").showAndWait();
+        }
     }
 }

@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.dubytube.dubytube.AppContext;
 import org.dubytube.dubytube.HelloApplication;
 import org.dubytube.dubytube.domain.Role;
 import org.dubytube.dubytube.domain.Usuario;
@@ -26,6 +27,8 @@ public class MainController {
 
     @FXML
     public void initialize() {
+
+        AppContext.bootstrapIfEmpty();
         // Mostrar saludo y ocultar botones admin si no corresponde
         if (Session.isLogged()) {
             var u = Session.get();
