@@ -20,14 +20,11 @@ import java.util.stream.Collectors;
 
 public class ImportController {
 
-    // En el FXML: pon estos fx:id (o cambia aquí los nombres para que coincidan)
-    @FXML private Label lblArchivo;    // opcional, para mostrar el nombre
-    @FXML private Label lblResumen;    // opcional, para mostrar el conteo
-    @FXML private TextArea txtLog;     // opcional, log de errores/avisos
+    @FXML private Label lblArchivo;
+    @FXML private Label lblResumen;
+    @FXML private TextArea txtLog;
 
-    // Botón “Elegir archivo” -> onElegirArchivo()
-    @FXML
-    private void onElegirArchivo() {
+    @FXML private void onElegirArchivo() {
         try {
             FileChooser fc = new FileChooser();
             fc.setTitle("Selecciona CSV de canciones");
@@ -43,7 +40,9 @@ public class ImportController {
         }
     }
 
-    /** Formato esperado por fila: id,titulo,artista,genero,anio,duracionSeg (con o sin id) */
+    // Alias por si tu FXML antiguo quedó con onPickFile
+    @FXML private void onPickFile() { onElegirArchivo(); }
+
     private void importarCSV(File file) {
         int ok = 0, bad = 0, duplicados = 0;
         var repo = AppContext.canciones();
@@ -55,12 +54,10 @@ public class ImportController {
                 lineNo++;
                 String raw = line.trim();
                 if (raw.isEmpty()) continue;
-                // Saltar encabezado simple
                 if (lineNo == 1 && raw.toLowerCase(Locale.ROOT).contains("titulo")) continue;
 
                 try {
                     String[] t = parseCSV(raw);
-                    // Permitir 5 o 6 columnas (sin id -> generamos uno)
                     String id, titulo, artista, genero;
                     int anio, dur;
 
@@ -85,9 +82,7 @@ public class ImportController {
                         continue;
                     }
 
-                    // Duplicado por ID
-                    var exists = repo.find(id).isPresent();
-                    if (exists) {
+                    if (repo.find(id).isPresent()) {
                         duplicados++;
                         log("Línea " + lineNo + ": duplicado id=" + id);
                         continue;
@@ -97,10 +92,7 @@ public class ImportController {
                     repo.save(c);
                     ok++;
 
-                    // Indexar en el Trie compartido
                     AppContext.indice().registrarCancion(c);
-
-                    // Conectar similitudes (heurística simple no dirigida)
                     conectarSimilitudesHeuristica(c);
 
                 } catch (Exception ex) {
@@ -120,7 +112,6 @@ public class ImportController {
         alertInfo("Importación terminada.\nOK=" + ok + ", duplicados=" + duplicados + ", errores=" + bad);
     }
 
-    /** Conecta el nuevo nodo con el resto aplicando una métrica simple de distancia (menor = más similar). */
     private void conectarSimilitudesHeuristica(Cancion c) {
         var grafo = AppContext.similitud();
         var todas = AppContext.canciones().findAll().stream()
@@ -135,18 +126,12 @@ public class ImportController {
             if (diff <= 2)      score += 2.0;
             else if (diff <= 5) score += 1.0;
 
-            // Convertimos “score alto” en “distancia baja”
             double distancia = Math.max(0.5, 10.0 - score);
-            grafo.agregarSimilitud(c.getId(), o.getId(), distancia); // NO dirigido por dentro
+            grafo.agregarSimilitud(c.getId(), o.getId(), distancia);
         }
     }
 
-    private static boolean safeEq(String a, String b) {
-        if (a == null || b == null) return false;
-        return a.equalsIgnoreCase(b);
-    }
-
-    /** CSV naive: separa por comas respetando comillas dobles. */
+    private static boolean safeEq(String a, String b) { return a != null && b != null && a.equalsIgnoreCase(b); }
     private static String[] parseCSV(String s) {
         List<String> out = new ArrayList<>();
         boolean inQ = false; StringBuilder cur = new StringBuilder();
@@ -158,10 +143,8 @@ public class ImportController {
         out.add(cur.toString());
         return out.stream().map(String::trim).toArray(String[]::new);
     }
-
     private static String nvl(String s){ return s == null ? "" : s.trim(); }
 
-    // Navegar atrás (botón “Volver” en el FXML) -> onVolver()
     @FXML
     private void onVolver() {
         try {
