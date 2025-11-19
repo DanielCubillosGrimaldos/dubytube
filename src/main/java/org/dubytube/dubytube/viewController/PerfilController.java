@@ -12,7 +12,6 @@ import org.dubytube.dubytube.domain.Cancion;
 import org.dubytube.dubytube.services.ExportarServices;
 import org.dubytube.dubytube.services.Session;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 public class PerfilController {
@@ -33,12 +32,7 @@ public class PerfilController {
 
         var u = Session.get();
         if (u != null) {
-            // Convertir MyLinkedList a una lista observable
-            var favoritos = new java.util.ArrayList<Cancion>();
-            for (Cancion c : u.getFavoritos()) {
-                favoritos.add(c);
-            }
-            tblFav.setItems(FXCollections.observableArrayList(favoritos));
+            tblFav.setItems(FXCollections.observableArrayList(u.getFavoritos()));
         }
 
         addRemoveButtonColumn();
@@ -82,12 +76,12 @@ public class PerfilController {
     private void onVolver() {
         try {
             Stage stage = (Stage) tblFav.getScene().getWindow();
-            Scene scene = HelloApplication.createScene("MainView.fxml", 900, 600);
+            var url = HelloApplication.class.getResource("/view/MainView.fxml");
+            var scene = new Scene(new FXMLLoader(url).load(), 900, 600);
             stage.setTitle("Inicio");
             stage.setScene(scene);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

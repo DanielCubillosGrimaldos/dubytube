@@ -1,76 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.dubytube.dubytube.viewController.RecomendarController"
-      spacing="20" prefHeight="650" prefWidth="900">
-    <padding><Insets top="24" right="32" bottom="24" left="32"/></padding>
+      spacing="10">
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
 
-    <!-- Header -->
-    <HBox alignment="CENTER_LEFT" spacing="16">
-        <Text text="✨" style="-fx-font-size: 32px;" />
-        <VBox spacing="4">
-            <Label text="Recomendaciones Musicales" styleClass="title-medium">
-                <font>
-                    <Font name="System Bold" size="24.0" />
-                </font>
-            </Label>
-            <Label text="Descubre canciones similares basadas en tus gustos" styleClass="label-secondary" />
-        </VBox>
-        <Region HBox.hgrow="ALWAYS"/>
-        <Button text="← Volver" onAction="#onVolver" styleClass="button-secondary" />
+    <HBox spacing="8">
+        <Label text="Canción semilla:"/>
+        <ComboBox fx:id="cmbSemilla" prefWidth="360"/>
+        <Label text="k:"/>
+        <Spinner fx:id="spK" prefWidth="80"/>
+        <Button text="Recomendar" onAction="#onRecomendar"/>
+        <Button text="Volver" onAction="#onVolver"/>
     </HBox>
 
-    <Separator style="-fx-background-color: -fx-bg-tertiary;" />
-
-    <!-- Configuration Section -->
-    <VBox spacing="12" styleClass="card">
-        <Label text="CONFIGURACIÓN" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: -fx-text-secondary;" />
-        
-        <GridPane hgap="16" vgap="12">
-            <columnConstraints>
-                <ColumnConstraints percentWidth="70"/>
-                <ColumnConstraints percentWidth="15"/>
-                <ColumnConstraints percentWidth="15"/>
-            </columnConstraints>
-
-            <!-- Seed Song -->
-            <VBox spacing="6" GridPane.columnIndex="0">
-                <Label text="Canción semilla" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
-                <ComboBox fx:id="cmbSemilla" prefWidth="9999" maxWidth="Infinity" prefHeight="40" style="-fx-font-size: 14px;"/>
-            </VBox>
-
-            <!-- K Value -->
-            <VBox spacing="6" GridPane.columnIndex="1">
-                <Label text="Cantidad (k)" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
-                <Spinner fx:id="spK" prefWidth="9999" maxWidth="Infinity" prefHeight="40" style="-fx-font-size: 14px;"/>
-            </VBox>
-
-            <!-- Button -->
-            <VBox spacing="6" GridPane.columnIndex="2" alignment="BOTTOM_CENTER">
-                <Button text="Buscar" onAction="#onRecomendar" styleClass="button-primary" prefWidth="9999" maxWidth="Infinity" prefHeight="40" style="-fx-font-size: 14px;"/>
-            </VBox>
-        </GridPane>
-    </VBox>
-
-    <!-- Results Section -->
-    <VBox spacing="12" VBox.vgrow="ALWAYS">
-        <HBox alignment="CENTER_LEFT" spacing="8">
-            <Text text="🎵" style="-fx-font-size: 20px;" />
-            <Label text="CANCIONES RECOMENDADAS" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: -fx-text-secondary;" />
-        </HBox>
-        
-        <TableView fx:id="tblResultados" VBox.vgrow="ALWAYS" prefHeight="380">
-            <columns>
-                <TableColumn fx:id="colTitulo"   text="Título"   prefWidth="260"/>
-                <TableColumn fx:id="colArtista"  text="Artista"  prefWidth="220"/>
-                <TableColumn fx:id="colGenero"   text="Género"   prefWidth="140"/>
-                <TableColumn fx:id="colAnio"     text="Año"      prefWidth="90"/>
-                <TableColumn fx:id="colDist"     text="Similitud" prefWidth="130"/>
-            </columns>
-        </TableView>
-    </VBox>
+    <TableView fx:id="tblResultados" prefHeight="520">
+        <columns>
+            <TableColumn fx:id="colTitulo"   text="Título"   prefWidth="260"/>
+            <TableColumn fx:id="colArtista"  text="Artista"  prefWidth="220"/>
+            <TableColumn fx:id="colGenero"   text="Género"   prefWidth="140"/>
+            <TableColumn fx:id="colAnio"     text="Año"      prefWidth="80"/>
+            <TableColumn fx:id="colDist"     text="Distancia" prefWidth="120"/>
+        </columns>
+    </TableView>
 </VBox>

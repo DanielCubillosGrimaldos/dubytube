@@ -1,1 +1,30 @@
 [
+  {
+    "username": "daniel",
+    "password": "123",
+    "nombre": "Daniel",
+    "favoritos": [],
+    "role": "USER"
+  },
+  {
+    "username": "admin",
+    "password": "123",
+    "nombre": "Administrador",
+    "favoritos": [],
+    "role": "ADMIN"
+  },
+  {
+    "username": "xxx",
+    "password": "123",
+    "nombre": "xxx",
+    "favoritos": [],
+    "role": "USER"
+  },
+  {
+    "username": "jeff",
+    "password": "123",
+    "nombre": "jeff",
+    "favoritos": [],
+    "role": "ADMIN"
+  }
+]
