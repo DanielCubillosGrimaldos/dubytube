@@ -1,4 +1,0 @@
-0000000000000000000000000000000000000000 f362519595ef704753db159d01a29e04dee4a9d9 Alejandro <jheniera.araujom@uqvirtual.edu.co> 1763485343 -0500	clone: from https://github.com/DanielCubillosGrimaldos/dubytube.git
-f362519595ef704753db159d01a29e04dee4a9d9 be88a1387edbda1b6da50470ba227ced49f23f85 Alejandro <jheniera.araujom@uqvirtual.edu.co> 1763495789 -0500	commit: Se arregla el boton registrar
-be88a1387edbda1b6da50470ba227ced49f23f85 7351c0cdb297576e3a000adc7fd9ab90ac80910f Alejandro <jheniera.araujom@uqvirtual.edu.co> 1763498445 -0500	commit: Ahora se ejecuta el CSS en todo momento
-7351c0cdb297576e3a000adc7fd9ab90ac80910f 3f4ee09b745d0f31506bd64b1017c5c7bdf34c40 Alejandro <jheniera.araujom@uqvirtual.edu.co> 1763498754 -0500	commit: Ahora el CSS siempre se ejecuta.

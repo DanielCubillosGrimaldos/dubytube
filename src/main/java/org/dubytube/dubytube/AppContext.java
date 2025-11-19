@@ -8,9 +8,7 @@ import org.dubytube.dubytube.domain.Role;
 import org.dubytube.dubytube.domain.Usuario;
 import org.dubytube.dubytube.repo.CancionRepo;
 import org.dubytube.dubytube.repo.UsuarioRepo;
-import org.dubytube.dubytube.repo.GeneroRepo;
 import org.dubytube.dubytube.services.CancionIndice;
-import org.dubytube.dubytube.services.RadioService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,28 +17,16 @@ public final class AppContext {
 
     private static final CancionRepo     canciones  = new CancionRepo();
     private static final UsuarioRepo     usuarios   = new UsuarioRepo();
-    private static final GeneroRepo      generos    = new GeneroRepo();
     private static final GrafoSimilitud  similitud  = new GrafoSimilitud();
     private static final GrafoSocial     social     = new GrafoSocial();
     // Índice compartido de títulos (Trie)
     private static final CancionIndice   indice     = new CancionIndice(canciones);
-    // Servicio de reproducción tipo radio
-    private static final RadioService    radio      = new RadioService();
 
     // Flag para evitar re-sembrar
     private static boolean BOOTSTRAPPED = false;
 
     private AppContext(){}
 
-    public static CancionRepo getCancionRepo()      { return canciones; }
-    public static UsuarioRepo getUsuarioRepo()      { return usuarios; }
-    public static GeneroRepo getGeneroRepo()        { return generos; }
-    public static GrafoSimilitud getSimilitudGrafo(){ return similitud; }
-    public static GrafoSocial getSocialGrafo()      { return social; }
-    public static CancionIndice getCancionIndice()  { return indice; }
-    public static RadioService getRadioService()    { return radio; }
-    
-    // Métodos legacy para compatibilidad
     public static CancionRepo canciones()   { return canciones; }
     public static UsuarioRepo usuarios()    { return usuarios; }
     public static GrafoSimilitud similitud(){ return similitud; }
