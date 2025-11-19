@@ -1,5 +1,13 @@
 [
   {
+    "id": "test1",
+    "titulo": "Bohemian Rhapsody",
+    "artista": "Queen",
+    "genero": "Rock",
+    "anio": 1975,
+    "duracionSeg": 354
+  },
+  {
     "id": "test4",
     "titulo": "Billie Jean",
     "artista": "Michael Jackson",
@@ -16,12 +24,28 @@
     "duracionSeg": 391
   },
   {
+    "id": "1",
+    "titulo": "Love Song",
+    "artista": "Adele",
+    "genero": "Pop",
+    "anio": 2015,
+    "duracionSeg": 210
+  },
+  {
     "id": "test2",
     "titulo": "Imagine",
     "artista": "John Lennon",
     "genero": "Rock",
     "anio": 1971,
     "duracionSeg": 183
+  },
+  {
+    "id": "2",
+    "titulo": "Lobo Hombre",
+    "artista": "La Unión",
+    "genero": "Rock",
+    "anio": 1984,
+    "duracionSeg": 190
   },
   {
     "id": "test3",
@@ -32,12 +56,44 @@
     "duracionSeg": 357
   },
   {
+    "id": "3",
+    "titulo": "Ave Maria",
+    "artista": "Schubert",
+    "genero": "Clásica",
+    "anio": 1825,
+    "duracionSeg": 150
+  },
+  {
+    "id": "4",
+    "titulo": "Rolling in the Deep",
+    "artista": "Adele",
+    "genero": "Pop",
+    "anio": 2011,
+    "duracionSeg": 228
+  },
+  {
+    "id": "5",
+    "titulo": "Someone Like You",
+    "artista": "Adele",
+    "genero": "Pop",
+    "anio": 2011,
+    "duracionSeg": 285
+  },
+  {
     "id": "test6",
     "titulo": "Take Five",
     "artista": "Dave Brubeck",
     "genero": "Jazz",
     "anio": 1959,
     "duracionSeg": 324
+  },
+  {
+    "id": "6",
+    "titulo": "Bohemian Rhapsody",
+    "artista": "Queen",
+    "genero": "Rock",
+    "anio": 1975,
+    "duracionSeg": 354
   },
   {
     "id": "5152ff52-34e7-4ef5-aaa2-f00f2bb08d0c",
@@ -48,13 +104,5 @@
     "duracionSeg": 180,
     "archivoAudio": "5152ff52-34e7-4ef5-aaa2-f00f2bb08d0c.mp3",
     "subidaPor": "admin"
-  },
-  {
-    "id": "test1",
-    "titulo": "Bohemian Rhapsody",
-    "artista": "Queen",
-    "genero": "Rock",
-    "anio": 1975,
-    "duracionSeg": 354
   }
 ]
