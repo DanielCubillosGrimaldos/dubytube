@@ -1,0 +1,60 @@
+[
+  {
+    "id": "test4",
+    "titulo": "Billie Jean",
+    "artista": "Michael Jackson",
+    "genero": "Pop",
+    "anio": 1982,
+    "duracionSeg": 294
+  },
+  {
+    "id": "test5",
+    "titulo": "Hotel California",
+    "artista": "Eagles",
+    "genero": "Rock",
+    "anio": 1976,
+    "duracionSeg": 391
+  },
+  {
+    "id": "test2",
+    "titulo": "Imagine",
+    "artista": "John Lennon",
+    "genero": "Rock",
+    "anio": 1971,
+    "duracionSeg": 183
+  },
+  {
+    "id": "test3",
+    "titulo": "Thriller",
+    "artista": "Michael Jackson",
+    "genero": "Pop",
+    "anio": 1982,
+    "duracionSeg": 357
+  },
+  {
+    "id": "test6",
+    "titulo": "Take Five",
+    "artista": "Dave Brubeck",
+    "genero": "Jazz",
+    "anio": 1959,
+    "duracionSeg": 324
+  },
+  {
+    "id": "5152ff52-34e7-4ef5-aaa2-f00f2bb08d0c",
+    "titulo": "Karma Police",
+    "artista": "Radiohead",
+    "genero": "Indie",
+    "anio": 2015,
+    "duracionSeg": 180,
+    "archivoAudio": "5152ff52-34e7-4ef5-aaa2-f00f2bb08d0c.mp3",
+    "subidaPor": "admin"
+  },
+  {
+    "id": "test1",
+    "titulo": "Bohemian Rhapsody",
+    "artista": "Queen",
+    "genero": "Rock",
+    "anio": 1975,
+    "duracionSeg": 354
+  }
+]

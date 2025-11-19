@@ -1,22 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.dubytube.dubytube.viewController.ImportController"
-      spacing="12" styleClass="root">
-    <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+      spacing="20" prefHeight="650" prefWidth="900" styleClass="root">
+    <padding><Insets top="24" right="32" bottom="24" left="32"/></padding>
 
-    <Label text="Importar catálogo (CSV) — Formato: id,titulo,artista,genero,anio,duracionSeg"/>
-    <HBox spacing="8">
-        <Button text="Elegir archivo..." onAction="#onElegirArchivo"/>
-        <Label fx:id="lblArchivo" text="(sin archivo)"/>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Volver" onAction="#onVolver"/>
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <Text text="📤" style="-fx-font-size: 32px;" />
+        <VBox spacing="4">
+            <Label text="Exportar Datos" styleClass="title-medium">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+            <Label text="Exporta datos del sistema en formato CSV" styleClass="label-secondary" />
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="← Volver" onAction="#onVolver" styleClass="button-secondary" />
     </HBox>
 
-    <Label fx:id="lblResumen" text="" />
-    <TextArea fx:id="txtLog" prefRowCount="18" promptText="Log de importación..."/>
+    <Separator style="-fx-background-color: -fx-bg-tertiary;" />
+    
+    <!-- Export Section -->
+    <VBox spacing="16" VBox.vgrow="ALWAYS">
+        
+        <!-- Card: Exportar Canciones -->
+        <VBox spacing="12" styleClass="card">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <Text text="📊" style="-fx-font-size: 32px;" />
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Catálogo de Canciones" styleClass="title-small" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                    <Label text="Exporta todas las canciones del sistema con sus metadatos (título, artista, género, año, duración, etc.)" 
+                           styleClass="label-secondary" style="-fx-font-size: 12px;" wrapText="true"/>
+                </VBox>
+                <Button text="� Exportar Canciones" onAction="#onExportarCanciones" styleClass="button-primary" prefHeight="40" prefWidth="180" style="-fx-font-size: 13px;"/>
+            </HBox>
+        </VBox>
+        
+        <!-- Card: Exportar Usuarios -->
+        <VBox spacing="12" styleClass="card">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <Text text="👥" style="-fx-font-size: 32px;" />
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Lista de Usuarios" styleClass="title-small" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                    <Label text="Exporta todos los usuarios registrados con su información básica (username, nombre, rol, cantidad de favoritos)" 
+                           styleClass="label-secondary" style="-fx-font-size: 12px;" wrapText="true"/>
+                </VBox>
+                <Button text="📥 Exportar Usuarios" onAction="#onExportarUsuarios" styleClass="button-primary" prefHeight="40" prefWidth="180" style="-fx-font-size: 13px;"/>
+            </HBox>
+        </VBox>
+        
+        <!-- Card: Exportar Géneros -->
+        <VBox spacing="12" styleClass="card">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <Text text="🎸" style="-fx-font-size: 32px;" />
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Catálogo de Géneros" styleClass="title-small" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                    <Label text="Exporta todos los géneros musicales disponibles en el sistema con estadísticas (cantidad de canciones por género)" 
+                           styleClass="label-secondary" style="-fx-font-size: 12px;" wrapText="true"/>
+                </VBox>
+                <Button text="📥 Exportar Géneros" onAction="#onExportarGeneros" styleClass="button-primary" prefHeight="40" prefWidth="180" style="-fx-font-size: 13px;"/>
+            </HBox>
+        </VBox>
+        
+        <!-- Info Card -->
+        <VBox spacing="8" styleClass="card" style="-fx-background-color: -fx-bg-tertiary; -fx-padding: 16px;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Text text="�" style="-fx-font-size: 20px;" />
+                <Label text="INFORMACIÓN IMPORTANTE" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: -fx-text-secondary;" />
+            </HBox>
+            <VBox spacing="4">
+                <Label text="• Los archivos CSV se guardarán en la ubicación que elijas" styleClass="label-secondary" style="-fx-font-size: 12px;"/>
+                <Label text="• Por seguridad, las contraseñas de usuarios NO se exportan" styleClass="label-secondary" style="-fx-font-size: 12px;"/>
+                <Label text="• Los archivos de audio NO se incluyen en la exportación (solo metadatos)" styleClass="label-secondary" style="-fx-font-size: 12px;"/>
+                <Label text="• Formato CSV compatible con Excel, Google Sheets y otras herramientas" styleClass="label-secondary" style="-fx-font-size: 12px;"/>
+            </VBox>
+        </VBox>
+    </VBox>
 </VBox>

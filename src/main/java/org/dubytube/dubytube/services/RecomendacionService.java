@@ -50,14 +50,29 @@ public class RecomendacionService {
         return d;
     }
 
+    /**
+     * Recomienda canciones similares a la fuente, excluyendo la canción original.
+     * 
+     * @param sourceId ID de la canción semilla
+     * @param k Número de recomendaciones deseadas
+     * @return Lista de recomendaciones ordenadas por similitud (sin incluir la canción fuente)
+     */
     public List<Rec> recomendar(String sourceId, int k) {
         if (sourceId == null) return Collections.emptyList();
-        List<String> ids = grafo.recomendarDesde(sourceId, k);
+        
+        // Pedimos k+1 para compensar la eliminación de la canción fuente
+        List<String> ids = grafo.recomendarDesde(sourceId, k + 1);
         Map<String, Double> dist = grafo.dijkstra(sourceId);
         List<Rec> out = new ArrayList<>();
+        
         for (String id : ids) {
+            // Excluir la canción fuente de los resultados
+            if (id.equals(sourceId)) continue;
+            
             repo.find(id).ifPresent(c -> out.add(new Rec(c, dist.getOrDefault(id, Double.NaN))));
         }
-        return out;
+        
+        // Limitar a k resultados (sin contar la fuente)
+        return out.size() > k ? out.subList(0, k) : out;
     }
 }

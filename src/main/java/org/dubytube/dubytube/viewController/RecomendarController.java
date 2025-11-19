@@ -2,7 +2,6 @@ package org.dubytube.dubytube.viewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -12,6 +11,7 @@ import org.dubytube.dubytube.domain.Cancion;
 import org.dubytube.dubytube.repo.CancionRepo;
 import org.dubytube.dubytube.services.RecomendacionService;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.dubytube.dubytube.AppContext.canciones;
@@ -79,12 +79,12 @@ public class RecomendarController {
     private void onVolver() {
         try {
             Stage stage = (Stage) tblResultados.getScene().getWindow();
-            var url = HelloApplication.class.getResource("/view/MainView.fxml");
-            var scene = new Scene(new FXMLLoader(url).load(), 900, 600);
+            Scene scene = HelloApplication.createScene("MainView.fxml", 900, 600);
             stage.setTitle("Inicio");
             stage.setScene(scene);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

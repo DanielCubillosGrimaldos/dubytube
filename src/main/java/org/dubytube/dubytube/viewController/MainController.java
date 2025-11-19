@@ -5,8 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.Node;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.dubytube.dubytube.AppContext;
@@ -22,33 +22,38 @@ import java.nio.file.Path;
 public class MainController {
 
     @FXML private Label lblUsuario;
-    @FXML private Button btnImport;  // Admin only
-    @FXML private Button btnCrud;    // Admin only
+    @FXML private Node adminSection;  // Admin only section - Changed to Node to support VBox
 
     @FXML
     public void initialize() {
 
         AppContext.bootstrapIfEmpty();
-        // Mostrar saludo y ocultar botones admin si no corresponde
+        // Mostrar saludo y ocultar sección admin si no corresponde
         if (Session.isLogged()) {
             var u = Session.get();
             lblUsuario.setText("Hola, " + u.getNombre() + (u.getRole()!=null? " ("+u.getRole()+")" : ""));
             boolean isAdmin = (u.getRole() == Role.ADMIN);
-            if (btnImport != null) btnImport.setVisible(isAdmin);
-            if (btnCrud   != null) btnCrud.setVisible(isAdmin);
+            if (adminSection != null) adminSection.setVisible(isAdmin);
         } else {
             lblUsuario.setText("Sin sesión");
         }
     }
 
     // --- Navegación ---
-    @FXML private void goBuscar()   { go("/view/BuscarView.fxml",       "Búsqueda por título"); }
-    @FXML private void goAvanzada() { go("/view/AvanzadaView.fxml",     "Búsqueda avanzada");   }
-    @FXML private void goRecom()    { go("/view/RecomendarView.fxml",   "Recomendaciones");     }
-    @FXML private void goAmigos()   { go("/view/AmigosView.fxml",       "Amigos de amigos");    }
-    @FXML private void goPerfil()   { go("/view/PerfilView.fxml",       "Mi Perfil");           }
-    @FXML private void goImport()   { go("/view/ImportView.fxml",       "Importar catálogo");   }
-    @FXML private void goCrud()     { go("/view/CrudCancionView.fxml",  "CRUD Canciones");      }
+    @FXML private void goBuscar()       { go("/view/BuscarView.fxml",        "Búsqueda por título");    }
+    @FXML private void goAvanzada()     { go("/view/AvanzadaView.fxml",      "Búsqueda avanzada");      }
+    @FXML private void goRecom()        { go("/view/RecomendarView.fxml",    "Recomendaciones");        }
+    @FXML private void goAmigos()       { go("/view/AmigosView.fxml",        "Amigos de amigos");       }
+    @FXML private void goExplorar()     { go("/view/ExplorarView.fxml",      "Explorar Usuarios");      }
+    @FXML private void goPerfil()       { go("/view/PerfilView.fxml",        "Mi Perfil");              }
+    @FXML private void goImport()       { go("/view/ImportView.fxml",        "Exportar Datos");         }
+    @FXML private void goCrud()         { go("/view/CrudCancionView.fxml",   "CRUD Canciones");         }
+    @FXML private void goRadio()        { go("/view/RadioView.fxml",         "Radio DubyTube");         }
+    @FXML private void goMetricas()     { go("/view/MetricasView.fxml",      "Panel de Métricas");      }
+    @FXML private void goAdminUsers()   { go("/view/AdminUsersView.fxml",    "Gestión de Usuarios");    }
+    @FXML private void goAdminGeneros() { go("/view/AdminGenerosView.fxml",  "Gestión de Géneros");     }
+
+
 
     @FXML
     private void onExport() {
@@ -83,6 +88,7 @@ public class MainController {
     @FXML
     private void onLogout() {
         Session.clear();
+
         go("/view/LoginView.fxml", "Login");
     }
 

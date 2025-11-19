@@ -1,72 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.dubytube.dubytube.viewController.CrudCancionController">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.dubytube.dubytube.viewController.CrudCancionController"
+      spacing="20" prefHeight="650" prefWidth="1000">
+    <padding><Insets top="24" right="32" bottom="24" left="32"/></padding>
 
-    <top>
-        <VBox spacing="8" BorderPane.alignment="CENTER">
-            <padding><Insets top="12" left="12" right="12" bottom="12"/></padding>
-            <Label text="CRUD Canciones"/>
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <Text text="⚙️" style="-fx-font-size: 32px;" />
+        <VBox spacing="4">
+            <Label text="Gestión de Canciones" styleClass="title-medium">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+            <Label text="Crear, editar y eliminar canciones del catálogo" styleClass="label-secondary" />
         </VBox>
-    </top>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="← Volver" onAction="#onVolver" styleClass="button-secondary" />
+    </HBox>
 
-    <center>
-        <!-- OJO: NO definir cellValueFactory en FXML; el controller lo hace -->
-        <TableView fx:id="tbl" prefHeight="360">
+    <Separator style="-fx-background-color: -fx-bg-tertiary;" />
+
+    <!-- Table Section -->
+    <VBox spacing="12" VBox.vgrow="ALWAYS">
+        <Label text="CATÁLOGO DE CANCIONES" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: -fx-text-secondary;" />
+        
+        <TableView fx:id="tbl" prefHeight="280" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colId"       text="ID"        prefWidth="160"/>
-                <TableColumn fx:id="colTitulo"   text="Título"    prefWidth="220"/>
+                <TableColumn fx:id="colId"       text="ID"        prefWidth="140"/>
+                <TableColumn fx:id="colTitulo"   text="Título"    prefWidth="200"/>
                 <TableColumn fx:id="colArtista"  text="Artista"   prefWidth="180"/>
-                <TableColumn fx:id="colGenero"   text="Género"    prefWidth="140"/>
+                <TableColumn fx:id="colGenero"   text="Género"    prefWidth="120"/>
                 <TableColumn fx:id="colAnio"     text="Año"       prefWidth="80"/>
-                <TableColumn fx:id="colDuracion" text="Duración"  prefWidth="100"/>
+                <TableColumn fx:id="colDuracion" text="Duración"  prefWidth="90"/>
+                <TableColumn fx:id="colAudio"    text="🎵 Audio"  prefWidth="90"/>
             </columns>
         </TableView>
-    </center>
+    </VBox>
 
-    <bottom>
-        <VBox spacing="10" BorderPane.alignment="CENTER">
-            <padding><Insets top="10" left="12" right="12" bottom="12"/></padding>
+    <!-- Form Section -->
+    <VBox spacing="16" styleClass="card">
+        <Label text="DETALLES DE LA CANCIÓN" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: -fx-text-secondary;" />
+        
+        <GridPane hgap="16" vgap="12">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="16.66"/>
+                <ColumnConstraints percentWidth="33.33"/>
+                <ColumnConstraints percentWidth="16.66"/>
+                <ColumnConstraints percentWidth="33.33"/>
+            </columnConstraints>
 
-            <GridPane hgap="10" vgap="8">
-                <columnConstraints>
-                    <ColumnConstraints percentWidth="15"/>
-                    <ColumnConstraints percentWidth="35"/>
-                    <ColumnConstraints percentWidth="15"/>
-                    <ColumnConstraints percentWidth="35"/>
-                </columnConstraints>
+            <!-- Row 1 -->
+            <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                <Label text="ID (Generado automáticamente)" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <TextField fx:id="txtId" promptText="Se generará al guardar" editable="false" prefHeight="36" style="-fx-font-size: 14px; -fx-opacity: 0.7;"/>
+            </VBox>
 
-                <Label text="ID"           GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtId"   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="2" GridPane.columnSpan="2">
+                <Label text="Artista*" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <TextField fx:id="txtArtista" promptText="Nombre del artista" prefHeight="36" style="-fx-font-size: 14px;"/>
+            </VBox>
 
-                <Label text="Título"           GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtTitulo"   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <!-- Row 2 -->
+            <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="4">
+                <Label text="Título*" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <TextField fx:id="txtTitulo" promptText="Título de la canción" prefHeight="36" style="-fx-font-size: 14px;"/>
+            </VBox>
 
-                <Label text="Artista"          GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                <TextField fx:id="txtArtista"  GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+            <!-- Row 3 -->
+            <VBox spacing="6" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                <Label text="Género*" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <TextField fx:id="txtGenero" promptText="Rock, Pop, Jazz..." prefHeight="36" style="-fx-font-size: 14px;"/>
+            </VBox>
 
-                <Label text="Género"           GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-                <TextField fx:id="txtGenero"   GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+            <VBox spacing="6" GridPane.rowIndex="2" GridPane.columnIndex="2">
+                <Label text="Año*" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <TextField fx:id="txtAnio" promptText="YYYY" prefHeight="36" style="-fx-font-size: 14px;"/>
+            </VBox>
 
-                <Label text="Año"              GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtAnio"     GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <VBox spacing="6" GridPane.rowIndex="2" GridPane.columnIndex="3">
+                <Label text="Duración (desde audio)" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <TextField fx:id="txtDuracion" promptText="Se detectará automáticamente" editable="false" prefHeight="36" style="-fx-font-size: 14px; -fx-opacity: 0.7;"/>
+            </VBox>
+            
+            <!-- Row 4: Audio -->
+            <VBox spacing="6" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="3">
+                <Label text="Archivo de Audio (Recomendado)" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <TextField fx:id="txtArchivoAudio" promptText="Selecciona un archivo para obtener la duración automáticamente" editable="false" prefHeight="36" style="-fx-font-size: 14px;"/>
+            </VBox>
+            
+            <VBox spacing="6" GridPane.rowIndex="3" GridPane.columnIndex="3" alignment="BOTTOM_CENTER">
+                <Label text=" " styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <Button fx:id="btnSeleccionarAudio" text="🎵 Seleccionar Audio" onAction="#onSeleccionarAudio" styleClass="button" prefHeight="36" prefWidth="Infinity" style="-fx-font-size: 13px;"/>
+            </VBox>
+        </GridPane>
+        
+        <!-- Info Note -->
+        <HBox spacing="8" alignment="CENTER_LEFT" style="-fx-background-color: rgba(29, 185, 84, 0.1); -fx-padding: 12px; -fx-background-radius: 8px;">
+            <Label text="💡" style="-fx-font-size: 16px;"/>
+            <Label text="Consejo: Selecciona primero el archivo de audio para que la duración se detecte automáticamente" wrapText="true" styleClass="label-secondary" style="-fx-font-size: 12px;"/>
+        </HBox>
 
-                <Label text="Duración (s)"         GridPane.rowIndex="2" GridPane.columnIndex="2"/>
-                <TextField fx:id="txtDuracion"     GridPane.rowIndex="2" GridPane.columnIndex="3"/>
-            </GridPane>
-
-            <HBox spacing="10">
-                <Button text="Nuevo"   onAction="#onNuevo"/>
-                <Button text="Guardar" onAction="#onGuardar"/>
-                <Button text="Eliminar" onAction="#onEliminar"/>
-                <Pane HBox.hgrow="ALWAYS"/>
-                <Button text="Volver"  onAction="#onVolver"/>
-            </HBox>
-        </VBox>
-    </bottom>
-
-</BorderPane>
+        <!-- Action Buttons -->
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <Button text="➕ Nueva Canción" onAction="#onNuevo" styleClass="button-secondary" prefHeight="38" style="-fx-font-size: 13px;"/>
+            <Button text="💾 Guardar" onAction="#onGuardar" styleClass="button-primary" prefHeight="38" style="-fx-font-size: 13px;"/>
+            <Button text="🗑️ Eliminar" onAction="#onEliminar" styleClass="button-danger" prefHeight="38" style="-fx-font-size: 13px;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </VBox>
+</VBox>

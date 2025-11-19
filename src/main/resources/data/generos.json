@@ -1,0 +1,52 @@
+[
+  {
+    "id": "rock",
+    "nombre": "Rock",
+    "descripcion": "Música rock clásico y moderno"
+  },
+  {
+    "id": "pop",
+    "nombre": "Pop",
+    "descripcion": "Música pop comercial"
+  },
+  {
+    "id": "country",
+    "nombre": "Country",
+    "descripcion": "Música country y folk"
+  },
+  {
+    "id": "jazz",
+    "nombre": "Jazz",
+    "descripcion": "Jazz y música improvisada"
+  },
+  {
+    "id": "classical",
+    "nombre": "Clásica",
+    "descripcion": "Música clásica orquestal"
+  },
+  {
+    "id": "electronic",
+    "nombre": "Electrónica",
+    "descripcion": "Música electrónica y EDM"
+  },
+  {
+    "id": "metal",
+    "nombre": "Metal",
+    "descripcion": "Heavy metal y subgéneros"
+  },
+  {
+    "id": "hip-hop",
+    "nombre": "Hip Hop",
+    "descripcion": "Rap y hip hop"
+  },
+  {
+    "id": "blues",
+    "nombre": "Blues",
+    "descripcion": "Blues y R\u0026B"
+  },
+  {
+    "id": "reggae",
+    "nombre": "Reggae",
+    "descripcion": "Reggae y música caribeña"
+  }
+]
