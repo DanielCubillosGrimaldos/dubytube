@@ -3,64 +3,195 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
 
-<VBox
-      fx:controller="org.dubytube.dubytube.viewController.MainController"
-        alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
-   <padding>
-      <Insets top="12.0" />
-   </padding>
-   <children>
-      <Label fx:id="lblUsuario" text="Bienvenido a .......">
-         <font>
-            <Font size="25.0" />
-         </font></Label>
-      <AnchorPane prefHeight="215.0" prefWidth="900.0">
-         <children>
-            <Button layoutX="541.0" layoutY="160.0" mnemonicParsing="false" onAction="#goBuscar" text="Buscar">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="378.0" layoutY="160.0" mnemonicParsing="false" onAction="#goAvanzada" text="Búsqueda Avanzada">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="88.0" layoutY="160.0" mnemonicParsing="false" onAction="#goRecom" text="Recomendar Canciones">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="38.0" layoutY="33.0" mnemonicParsing="false" onAction="#goPerfil" text="Perfil">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button fx:id="btnCrud" layoutX="641.0" layoutY="160.0" mnemonicParsing="false" onAction="#goCrud" text="CRUD Canciones">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="104.0" layoutY="33.0" mnemonicParsing="false" onAction="#onExport" text="Exportar Favoritos">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="256.0" layoutY="33.0" mnemonicParsing="false" onAction="#goAmigos" text="Amigos">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button fx:id="btnImport" layoutX="657.0" layoutY="122.0" mnemonicParsing="false" onAction="#goImport" text="Import CVS">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Button layoutX="785.0" layoutY="160.0" mnemonicParsing="false" onAction="#onLogout" text="Cerrar Sesión">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Line endX="19.0" endY="190.0" layoutX="757.0" layoutY="15.0" startX="19.0" startY="-15.0" />
-            <Line endX="19.0" endY="190.0" layoutX="601.0" layoutY="15.0" startX="19.0" startY="-15.0" />
-            <Line endX="3.0" endY="190.0" layoutX="345.0" layoutY="15.0" startX="3.0" startY="-15.0" />
-            <Line endX="760.0" layoutX="115.0" layoutY="205.0" startX="-100.0" />
-            <Line endX="100.0" layoutX="247.0" layoutY="108.0" startX="-234.0" startY="-7.62939453125E-6" />
-         </children>
-      </AnchorPane>
-   </children>
-</VBox>
+<BorderPane prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dubytube.dubytube.viewController.MainController">
+   
+   <!-- Top Navigation Bar -->
+   <top>
+      <VBox styleClass="card" style="-fx-background-radius: 0; -fx-background-color: -fx-bg-secondary;">
+         <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 16px 24px;">
+            <!-- Logo -->
+            <HBox alignment="CENTER" spacing="12">
+               <StackPane>
+                  <Circle radius="20" fill="#1DB954" />
+                  <Text text="♫" fill="WHITE" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+               </StackPane>
+               <Label text="DubyTube" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;" />
+            </HBox>
+            
+            <!-- Spacer -->
+            <Region HBox.hgrow="ALWAYS" />
+            
+            <!-- User Info -->
+            <HBox alignment="CENTER" spacing="12">
+               <Label fx:id="lblUsuario" text="Usuario" styleClass="subtitle" style="-fx-text-fill: -fx-text-secondary;" />
+               <Button text="Cerrar Sesión" onAction="#onLogout" styleClass="button" style="-fx-font-size: 12px; -fx-padding: 6px 16px;" />
+            </HBox>
+         </HBox>
+      </VBox>
+   </top>
+   
+   <!-- Main Content Area with ScrollPane -->
+   <center>
+      <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+         <VBox spacing="24" style="-fx-padding: 32px 40px;">
+            <!-- Welcome Section -->
+            <VBox spacing="8" alignment="CENTER">
+               <Label text="Explora tu música" styleClass="title-medium">
+                  <font>
+                     <Font name="System Bold" size="28.0" />
+                  </font>
+               </Label>
+               <Label text="Descubre, busca y disfruta de tus canciones favoritas" styleClass="subtitle" />
+            </VBox>
+         
+         <Separator style="-fx-background-color: -fx-bg-tertiary;" />
+         
+         <!-- Main Features Grid -->
+         <VBox spacing="20">
+            <Label text="EXPLORAR" styleClass="label-secondary" style="-fx-font-weight: bold; -fx-font-size: 12px;" />
+            
+            <GridPane hgap="16" vgap="16">
+               <columnConstraints>
+                  <ColumnConstraints percentWidth="33.33" />
+                  <ColumnConstraints percentWidth="33.33" />
+                  <ColumnConstraints percentWidth="33.33" />
+               </columnConstraints>
+               
+               <!-- Card: Buscar -->
+               <VBox styleClass="card" spacing="12" alignment="CENTER" prefHeight="140" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-cursor: hand;" onMouseClicked="#goBuscar">
+                  <Text text="🔍" style="-fx-font-size: 40px;" />
+                  <Label text="Buscar Canciones" styleClass="title-small" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                  <Label text="Encuentra música por título" styleClass="label-secondary" wrapText="true" textAlignment="CENTER" />
+               </VBox>
+               
+               <!-- Card: Búsqueda Avanzada -->
+               <VBox styleClass="card" spacing="12" alignment="CENTER" prefHeight="140" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-cursor: hand;" onMouseClicked="#goAvanzada">
+                  <Text text="⚡" style="-fx-font-size: 40px;" />
+                  <Label text="Búsqueda Avanzada" styleClass="title-small" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                  <Label text="Filtros por género, artista y año" styleClass="label-secondary" wrapText="true" textAlignment="CENTER" />
+               </VBox>
+               
+               <!-- Card: Recomendaciones -->
+               <VBox styleClass="card" spacing="12" alignment="CENTER" prefHeight="140" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-cursor: hand;" onMouseClicked="#goRecom">
+                  <Text text="✨" style="-fx-font-size: 40px;" />
+                  <Label text="Recomendaciones" styleClass="title-small" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                  <Label text="Descubre música similar" styleClass="label-secondary" wrapText="true" textAlignment="CENTER" />
+               </VBox>
+            </GridPane>
+         </VBox>
+         
+         <!-- User Features Section -->
+         <VBox spacing="20">
+            <Label text="MI BIBLIOTECA" styleClass="label-secondary" style="-fx-font-weight: bold; -fx-font-size: 12px;" />
+            
+            <HBox spacing="16">
+               <!-- Card: Radio -->
+               <VBox styleClass="card" spacing="10" alignment="CENTER_LEFT" prefHeight="100" HBox.hgrow="ALWAYS" style="-fx-cursor: hand; -fx-background-color: linear-gradient(to right, #1DB954, #1ed760);" onMouseClicked="#goRadio">
+                  <HBox alignment="CENTER_LEFT" spacing="12">
+                     <Text text="🎵" style="-fx-font-size: 28px;" />
+                     <VBox spacing="4">
+                        <Label text="Radio" styleClass="title-small" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                        <Label text="Reproduce tu música" styleClass="label-secondary" style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.8);" />
+                     </VBox>
+                  </HBox>
+               </VBox>
+               
+               <!-- Card: Perfil -->
+               <VBox styleClass="card" spacing="10" alignment="CENTER_LEFT" prefHeight="100" HBox.hgrow="ALWAYS" style="-fx-cursor: hand;" onMouseClicked="#goPerfil">
+                  <HBox alignment="CENTER_LEFT" spacing="12">
+                     <Text text="👤" style="-fx-font-size: 28px;" />
+                     <VBox spacing="4">
+                        <Label text="Mi Perfil" styleClass="title-small" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                        <Label text="Ver favoritos" styleClass="label-secondary" style="-fx-font-size: 12px;" />
+                     </VBox>
+                  </HBox>
+               </VBox>
+               
+               <!-- Card: Amigos -->
+               <VBox styleClass="card" spacing="10" alignment="CENTER_LEFT" prefHeight="100" HBox.hgrow="ALWAYS" style="-fx-cursor: hand;" onMouseClicked="#goAmigos">
+                  <HBox alignment="CENTER_LEFT" spacing="12">
+                     <Text text="👥" style="-fx-font-size: 28px;" />
+                     <VBox spacing="4">
+                        <Label text="Amigos" styleClass="title-small" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                        <Label text="Red social musical" styleClass="label-secondary" style="-fx-font-size: 12px;" />
+                     </VBox>
+                  </HBox>
+               </VBox>
+               
+               <!-- Card: Exportar -->
+               <VBox styleClass="card" spacing="10" alignment="CENTER_LEFT" prefHeight="100" HBox.hgrow="ALWAYS" style="-fx-cursor: hand;" onMouseClicked="#onExport">
+                  <HBox alignment="CENTER_LEFT" spacing="12">
+                     <Text text="📥" style="-fx-font-size: 28px;" />
+                     <VBox spacing="4">
+                        <Label text="Exportar" styleClass="title-small" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                        <Label text="Guardar favoritos" styleClass="label-secondary" style="-fx-font-size: 12px;" />
+                     </VBox>
+                  </HBox>
+               </VBox>
+            </HBox>
+         </VBox>
+         
+         <!-- Admin Section -->
+         <VBox fx:id="adminSection" spacing="20">
+            <Label text="ADMINISTRACIÓN" styleClass="label-secondary" style="-fx-font-weight: bold; -fx-font-size: 12px;" />
+            
+            <GridPane hgap="16" vgap="16">
+               <columnConstraints>
+                  <ColumnConstraints percentWidth="25" />
+                  <ColumnConstraints percentWidth="25" />
+                  <ColumnConstraints percentWidth="25" />
+                  <ColumnConstraints percentWidth="25" />
+               </columnConstraints>
+               
+               <!-- Card: CRUD Canciones -->
+               <VBox styleClass="card" spacing="10" alignment="CENTER_LEFT" prefHeight="100" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-cursor: hand;" onMouseClicked="#goCrud">
+                  <HBox alignment="CENTER_LEFT" spacing="12">
+                     <Text text="⚙️" style="-fx-font-size: 28px;" />
+                     <VBox spacing="4">
+                        <Label text="Canciones" styleClass="title-small" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                        <Label text="Gestionar catálogo" styleClass="label-secondary" style="-fx-font-size: 12px;" />
+                     </VBox>
+                  </HBox>
+               </VBox>
+               
+               <!-- Card: Admin Usuarios -->
+               <VBox styleClass="card" spacing="10" alignment="CENTER_LEFT" prefHeight="100" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-cursor: hand;" onMouseClicked="#goAdminUsers">
+                  <HBox alignment="CENTER_LEFT" spacing="12">
+                     <Text text="👥" style="-fx-font-size: 28px;" />
+                     <VBox spacing="4">
+                        <Label text="Usuarios" styleClass="title-small" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                        <Label text="Gestionar usuarios" styleClass="label-secondary" style="-fx-font-size: 12px;" />
+                     </VBox>
+                  </HBox>
+               </VBox>
+               
+               <!-- Card: Admin Géneros -->
+               <VBox styleClass="card" spacing="10" alignment="CENTER_LEFT" prefHeight="100" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-cursor: hand;" onMouseClicked="#goAdminGeneros">
+                  <HBox alignment="CENTER_LEFT" spacing="12">
+                     <Text text="🎼" style="-fx-font-size: 28px;" />
+                     <VBox spacing="4">
+                        <Label text="Géneros" styleClass="title-small" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                        <Label text="Gestionar géneros" styleClass="label-secondary" style="-fx-font-size: 12px;" />
+                     </VBox>
+                  </HBox>
+               </VBox>
+               
+               <!-- Card: Import -->
+               <VBox styleClass="card" spacing="10" alignment="CENTER_LEFT" prefHeight="100" GridPane.columnIndex="3" GridPane.rowIndex="0" style="-fx-cursor: hand;" onMouseClicked="#goImport">
+                  <HBox alignment="CENTER_LEFT" spacing="12">
+                     <Text text="📤" style="-fx-font-size: 28px;" />
+                     <VBox spacing="4">
+                        <Label text="Importar CSV" styleClass="title-small" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                        <Label text="Carga masiva" styleClass="label-secondary" style="-fx-font-size: 12px;" />
+                     </VBox>
+                  </HBox>
+               </VBox>
+            </GridPane>
+         </VBox>
+         </VBox>
+      </ScrollPane>
+   </center>
+</BorderPane>

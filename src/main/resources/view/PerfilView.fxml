@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.dubytube.dubytube.viewController.PerfilController"
-      spacing="10">
-    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+      spacing="20" prefHeight="650" prefWidth="900">
+    <padding><Insets top="24" right="32" bottom="24" left="32"/></padding>
 
-    <HBox spacing="8">
-        <Label text="Mis favoritos" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Exportar CSV" onAction="#onExport"/>
-        <Button text="Volver" onAction="#onVolver"/>
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <Text text="👤" style="-fx-font-size: 32px;" />
+        <VBox spacing="4">
+            <Label text="Mi Perfil" styleClass="title-medium">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+            <Label text="Gestiona tus canciones favoritas" styleClass="label-secondary" />
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="📥 Exportar CSV" onAction="#onExport" styleClass="button-primary" style="-fx-font-size: 13px;" />
+        <Button text="← Volver" onAction="#onVolver" styleClass="button-secondary" />
     </HBox>
 
-    <TableView fx:id="tblFav" prefHeight="520">
-        <columns>
-            <TableColumn fx:id="colTitulo"  text="Título"  prefWidth="280"/>
-            <TableColumn fx:id="colArtista" text="Artista" prefWidth="220"/>
-            <TableColumn fx:id="colGenero"  text="Género"  prefWidth="140"/>
-            <TableColumn fx:id="colAnio"    text="Año"     prefWidth="80"/>
-            <TableColumn fx:id="colAccion"  text="Acción"  prefWidth="120"/>
-        </columns>
-    </TableView>
+    <Separator style="-fx-background-color: -fx-bg-tertiary;" />
+
+    <!-- Favorites Section -->
+    <VBox spacing="12" VBox.vgrow="ALWAYS">
+        <Label text="MIS FAVORITOS" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: -fx-text-secondary;" />
+        
+        <TableView fx:id="tblFav" VBox.vgrow="ALWAYS" prefHeight="480">
+            <columns>
+                <TableColumn fx:id="colTitulo"  text="Título"  prefWidth="280"/>
+                <TableColumn fx:id="colArtista" text="Artista" prefWidth="220"/>
+                <TableColumn fx:id="colGenero"  text="Género"  prefWidth="150"/>
+                <TableColumn fx:id="colAnio"    text="Año"     prefWidth="90"/>
+                <TableColumn fx:id="colAccion"  text="Acción"  prefWidth="140"/>
+            </columns>
+        </TableView>
+    </VBox>
 </VBox>

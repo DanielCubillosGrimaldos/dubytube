@@ -1,0 +1,26 @@
+[
+  {
+    "id": "c3",
+    "titulo": "Ave Maria",
+    "artista": "Schubert",
+    "genero": "Clásica",
+    "anio": 1825,
+    "duracionSeg": 150
+  },
+  {
+    "id": "c1",
+    "titulo": "Love Song",
+    "artista": "Adele",
+    "genero": "Pop",
+    "anio": 2015,
+    "duracionSeg": 210
+  },
+  {
+    "id": "c2",
+    "titulo": "Lobo Hombre",
+    "artista": "La Unión",
+    "genero": "Rock",
+    "anio": 1984,
+    "duracionSeg": 190
+  }
+]

@@ -1,37 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.dubytube.dubytube.viewController.AmigosController"
-      spacing="10">
+      spacing="20" prefHeight="650" prefWidth="900">
+    <padding><Insets top="24" right="32" bottom="24" left="32"/></padding>
 
-    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
-
-    <HBox spacing="8" alignment="CENTER_LEFT">
-        <Label text="Usuario:"/>
-        <TextField fx:id="txtUser" prefWidth="200"/>
-        <Button text="Ver" onAction="#onCargar"/>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Volver" onAction="#onVolver"/>
-    </HBox>
-
-    <HBox spacing="8" alignment="CENTER_LEFT">
-        <Label text="Agregar amistad con:"/>
-        <TextField fx:id="txtAmigo" promptText="username del amigo" prefWidth="220"/>
-        <Button text="Agregar" onAction="#onAgregar"/>
-        <Label fx:id="lblMsg"/>
-    </HBox>
-
-    <HBox spacing="16">
-        <VBox spacing="6" VBox.vgrow="ALWAYS">
-            <Label text="Amigos directos"/>
-            <ListView fx:id="lstDirectos" prefHeight="420"/>
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <Text text="👥" style="-fx-font-size: 32px;" />
+        <VBox spacing="4">
+            <Label text="Red Social Musical" styleClass="title-medium">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+            <Label text="Conecta con otros amantes de la música" styleClass="label-secondary" />
         </VBox>
-        <VBox spacing="6" VBox.vgrow="ALWAYS">
-            <Label text="Sugerencias (distancia 2)"/>
-            <ListView fx:id="lstSugerencias" prefHeight="420"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="← Volver" onAction="#onVolver" styleClass="button-secondary" />
+    </HBox>
+
+    <Separator style="-fx-background-color: -fx-bg-tertiary;" />
+
+    <!-- Search User Section -->
+    <VBox spacing="12" styleClass="card">
+        <Label text="BUSCAR USUARIO" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: -fx-text-secondary;" />
+        
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="Nombre de usuario" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <TextField fx:id="txtUser" promptText="Buscar por username..." prefHeight="40" style="-fx-font-size: 14px;"/>
+            </VBox>
+            <Button text="Ver Perfil" onAction="#onCargar" styleClass="button-primary" prefHeight="40" prefWidth="120" style="-fx-font-size: 14px;">
+                <VBox.margin>
+                    <Insets top="22.0" />
+                </VBox.margin>
+            </Button>
+        </HBox>
+    </VBox>
+
+    <!-- Add Friend Section -->
+    <VBox spacing="12" styleClass="card">
+        <Label text="AGREGAR AMIGO" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: -fx-text-secondary;" />
+        
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="Username del amigo" styleClass="label" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                <TextField fx:id="txtAmigo" promptText="username del amigo..." prefHeight="40" style="-fx-font-size: 14px;"/>
+            </VBox>
+            <Button text="➕ Agregar" onAction="#onAgregar" styleClass="button-primary" prefHeight="40" prefWidth="120" style="-fx-font-size: 14px;">
+                <VBox.margin>
+                    <Insets top="22.0" />
+                </VBox.margin>
+            </Button>
+        </HBox>
+        
+        <Label fx:id="lblMsg" styleClass="label-secondary" style="-fx-font-size: 13px; -fx-text-fill: -fx-primary;" />
+    </VBox>
+
+    <!-- Friends Lists -->
+    <HBox spacing="20" VBox.vgrow="ALWAYS">
+        <!-- Direct Friends -->
+        <VBox spacing="12" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Text text="👤" style="-fx-font-size: 20px;" />
+                <Label text="Amigos Directos" styleClass="title-small" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            </HBox>
+            <ListView fx:id="lstDirectos" VBox.vgrow="ALWAYS" prefHeight="300" style="-fx-background-radius: 8px;"/>
+        </VBox>
+        
+        <!-- Suggestions -->
+        <VBox spacing="12" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Text text="✨" style="-fx-font-size: 20px;" />
+                <Label text="Sugerencias" styleClass="title-small" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <Label text="(distancia 2)" styleClass="label-secondary" style="-fx-font-size: 12px;"/>
+            </HBox>
+            <ListView fx:id="lstSugerencias" VBox.vgrow="ALWAYS" prefHeight="300" style="-fx-background-radius: 8px;"/>
         </VBox>
     </HBox>
 </VBox>

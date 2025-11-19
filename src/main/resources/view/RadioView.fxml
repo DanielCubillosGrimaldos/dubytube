@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.dubytube.dubytube.viewController.RadioController"
+      styleClass="container"
+      spacing="20">
+
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Button text="⬅ Volver" onAction="#onVolver" styleClass="button-secondary"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Text text="🎵 Radio DubyTube" styleClass="title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <!-- Reproductor Principal -->
+    <VBox styleClass="card" spacing="25" style="-fx-background-color: linear-gradient(to bottom, #1e1e1e 0%, #121212 100%);">
+        <padding>
+            <Insets top="40" right="40" bottom="40" left="40"/>
+        </padding>
+
+        <!-- Información de la canción actual -->
+        <VBox alignment="CENTER" spacing="15">
+            <Text text="▶ REPRODUCIENDO AHORA" styleClass="subtitle" style="-fx-fill: #1DB954; -fx-font-size: 13px; -fx-font-weight: bold; -fx-letter-spacing: 2px;"/>
+            <Text fx:id="txtTitulo" text="Sin canción" styleClass="h2" style="-fx-font-size: 32px; -fx-font-weight: bold;"/>
+            <Text fx:id="txtArtista" text="-" styleClass="text-muted" style="-fx-font-size: 18px;"/>
+            <Text fx:id="txtGenero" text="-" styleClass="text-small" style="-fx-font-size: 14px; -fx-fill: #1DB954;"/>
+        </VBox>
+
+        <!-- Barra de progreso -->
+        <VBox spacing="8" style="-fx-padding: 20 0 0 0;">
+            <Slider fx:id="sliderProgreso" min="0" max="100" value="0" 
+                    styleClass="slider" onMouseReleased="#onSeek"
+                    style="-fx-pref-height: 8px;"/>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label fx:id="lblTiempoActual" text="0:00" 
+                       style="-fx-text-fill: #b3b3b3; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblTiempoTotal" text="0:00" 
+                       style="-fx-text-fill: #b3b3b3; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+            </HBox>
+        </VBox>
+
+        <!-- Controles de reproducción -->
+        <HBox alignment="CENTER" spacing="20" style="-fx-padding: 10 0 0 0;">
+            <Button text="🔀" onAction="#onShuffle" styleClass="button-icon" 
+                    fx:id="btnShuffle" prefWidth="55" prefHeight="55"
+                    style="-fx-font-size: 20px;"/>
+            <Button text="⏮" onAction="#onPrevious" styleClass="button-icon" 
+                    prefWidth="55" prefHeight="55"
+                    style="-fx-font-size: 22px;"/>
+            <Button fx:id="btnPlayPause" text="▶" onAction="#onPlayPause" 
+                    styleClass="button-primary" prefWidth="80" prefHeight="80"
+                    style="-fx-font-size: 32px; -fx-background-radius: 50%;"/>
+            <Button text="⏭" onAction="#onNext" styleClass="button-icon" 
+                    prefWidth="55" prefHeight="55"
+                    style="-fx-font-size: 22px;"/>
+            <Button text="🔁" onAction="#onRepeat" styleClass="button-icon" 
+                    fx:id="btnRepeat" prefWidth="55" prefHeight="55"
+                    style="-fx-font-size: 20px;"/>
+        </HBox>
+
+        <!-- Control de volumen -->
+        <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10 0 0 0;">
+            <Label text="🔊" style="-fx-font-size: 22px;"/>
+            <Slider fx:id="sliderVolumen" min="0" max="1" value="0.5" 
+                    prefWidth="250" styleClass="slider"
+                    style="-fx-pref-height: 6px;"/>
+            <Label fx:id="lblVolumen" text="50%" 
+                   style="-fx-text-fill: #b3b3b3; -fx-font-size: 14px; -fx-font-weight: 600; -fx-min-width: 45px;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Playlist -->
+    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="15">
+        <padding>
+            <Insets top="25" right="25" bottom="25" left="25"/>
+        </padding>
+
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Text text="📋 Cola de Reproducción" styleClass="h3" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="🔃 Recargar" onAction="#onCargarTodo" styleClass="button-secondary"
+                    style="-fx-padding: 10px 20px;"/>
+            <Label fx:id="lblCantidadCanciones" text="0 canciones" 
+                   style="-fx-text-fill: #1DB954; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <!-- Lista de canciones -->
+        <ListView fx:id="listCanciones" VBox.vgrow="ALWAYS" 
+                  styleClass="list-view"
+                  style="-fx-background-radius: 8px;"/>
+    </VBox>
+
+    <!-- Mensajes -->
+    <Label fx:id="lblMensaje" text="" 
+           style="-fx-text-fill: #1DB954; -fx-font-size: 14px; -fx-font-weight: 600; -fx-padding: 10px 20px; -fx-background-color: rgba(29, 185, 84, 0.1); -fx-background-radius: 8px;" 
+           wrapText="true"/>
+
+</VBox>
